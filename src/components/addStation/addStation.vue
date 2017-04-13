@@ -16,7 +16,6 @@
 	     		      	<input v-model="form.host" required name="host" class="form-control" :class="{'form-control':formClass.formControl}"/>
 	     		      </div>
 	     		    </validate>
-	     		    form.host{{formstate.form1.host}}
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">用户名</label>
 	     		      <div class="col-sm-10">
@@ -56,7 +55,7 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库表名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.table" required name="table" class="form-control" :class="{'form-control':formClass.formControl}"/>
+	     		      	<input v-model="form.tableName" required name="table" class="form-control" :class="{'form-control':formClass.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <button type="submit" class="center-block">连接测试</button>
