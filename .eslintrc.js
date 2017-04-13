@@ -27,6 +27,9 @@ module.exports = {
     'semi':0,
     'no-new':0,
     'no-unused-vars':0,
-    'no-undef':0
+    'no-undef':0,
+    // 自定义部分
+    'no-tabs':0,
+    'indent':0
   }
 }
