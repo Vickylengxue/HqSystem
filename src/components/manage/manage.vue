@@ -4,7 +4,6 @@
             <ul>
 	            <li @click="goToState('stationList')">分诊台</li>
             </ul>
-            <div class="add" @click="goToState('addStation')">添加分诊台</div>
 	    </div>
 	    <keep-alive>
 	      <router-view></router-view>

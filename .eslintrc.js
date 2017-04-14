@@ -30,6 +30,7 @@ module.exports = {
     'no-undef':0,
     // 自定义部分
     'no-tabs':0,
-    'indent':0
+    'indent':0,
+    'no-mixed-spaces-and-tabs':0
   }
 }

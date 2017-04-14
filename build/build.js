@@ -7,7 +7,6 @@ var path = require('path')
 var config = require('../config')
 var ora = require('ora')
 var webpack = require('webpack')
-console.log(webpack,"test")
 var webpackConfig = require('./webpack.prod.conf')
 
 console.log(

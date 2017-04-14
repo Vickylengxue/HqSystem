@@ -28,7 +28,6 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-        console.log(response, 'response')
         let data = response.data
         if (data.rescode === '200') {
           return data.detail

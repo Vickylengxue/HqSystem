@@ -14,7 +14,7 @@ import axios from './http'
 // 将axios挂载到prototype上，在组件中可以直接使用this.axios访问
 Vue.prototype.axios = axios;
 
-new Vue({
+var app = new Vue({
   router,
   store,
   axios,
