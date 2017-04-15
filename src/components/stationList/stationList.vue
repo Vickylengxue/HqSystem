@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="station">
+	<div class="addStation">
 	       <div class="addStation">
 		       	<div class="addstation-text"  @click="goToState('addStation')">新建分诊台</div>
 	       </div>

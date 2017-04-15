@@ -8,6 +8,24 @@
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
+	     		<h2>基础信息</h2>
+	     		<vue-form :state="formstate.form3"  class="form-horizontal" @submit.prevent="testDB">
+	     		    <validate  class="form-group">
+	     		      <label  class="col-sm-2 control-label">分诊台名称</label>
+	     		      <div class="col-sm-10">
+	     		      	<input v-model="form.host" required name="host" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      </div>
+	     		    </validate>
+	     		    <validate  class="form-group">
+	     		      <label  class="col-sm-2 control-label">分诊台描述</label>
+	     		      <div class="col-sm-10">
+	     		      	<input v-model="form.user" required name="user" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      </div>
+	     		    </validate>
+	     		  </vue-form>
+	     	</div>
+	     	<middleLine height='10'></middleLine>
+	     	<div class="row baseinfo">
 	     		<h2>数据库信息</h2>
 	     		<vue-form :state="formstate.form1"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
@@ -61,7 +79,6 @@
 	     		    <button type="submit" class="center-block">{{formControlObj.form1BtnVal}}</button>
 	     		  </vue-form>
 	     	</div>
-
 	     	<middleLine height='10'></middleLine>
 	     	<div class="row baseinfo">
 	     		<h2>SQL连接信息</h2>
@@ -171,6 +188,10 @@
 	     		    <button type="submit" class="center-block">{{formControlObj.form2BtnVal}}</button>
 	     		  </vue-form>
 	     	</div>
+	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
+	     		<p slot='body'>{{modal.modalContent}}</p>
+	     	</modal>
+	     	modal.modalContent
 	     </div>
 	</div>
 </template>
@@ -178,6 +199,7 @@
     import Vue from 'vue'
     import middleLine from '../../common/middleLine/middleLine'
     import VueForm from 'vue-form'
+    import modal from '../../common/modal/modal'
     Vue.use(VueForm)
 	export default {
 		name: 'addStation',
@@ -185,9 +207,12 @@
 			return {
 				formstate: {
 					form1: {},
-					form2: {}
+					form2: {},
+					form3: {}
 				},
 				form: {
+					name: '',
+					describe: '',
 					DBType: 'mysql',
 					host: '192.168.17.184',
 					port: '3306',
@@ -219,7 +244,11 @@
 					form1BtnVal: '',
 					form2BtnVal: ''
 				},
-				formBtnVal: ['连接失败', '连接测试', '连接成功']
+				formBtnVal: ['连接失败', '连接测试', '连接成功'],
+				modal: {
+					modalShow: false,
+					modalContent: ''
+				}
 			}
 		},
 		computed: {
@@ -228,7 +257,8 @@
 			}
 		},
 		components: {
-			middleLine
+			middleLine,
+			modal
 		},
 		created() {
 			this._init()
@@ -240,14 +270,13 @@
 			_init() {
 				this.formControlObj.form1BtnVal = this.formBtnVal[1]
 				this.formControlObj.form2BtnVal = this.formBtnVal[1]
-				console.log(this.formControlObj.form1BtnVal)
 			},
 			// 测试工作站数据源
 			testDB() {
 				if (this.formstate.form1.$invalid) {
-					// todo 表单优化
-					alert('请填写完整数据')
-					return;
+					// todo 表单需要优化
+					this.modal.modalContent = '请填写完整数据';
+					this.modal.modalShow = true;
 				} else {
 					this.axios.post(this.serverUrl, {
 						action: 'sourceTest',
@@ -263,14 +292,14 @@
 						if (res.testResult === 'failed') {
 							// 标记工作站数据源连接不成功
 							this.formstate.form1.linkTest = false;
-							// todo
-							// 弹出框优化
-							alert('连接失败，请重试')
+							this.modal.modalContent = '连接失败，请重试';
+							this.modal.modalShow = true;
 							this.formControlObj.form1BtnVal = this.formBtnVal[0]
 						} else {
 							this.formstate.form1.linkTest = true;
 							this.formControlObj.form1BtnVal = this.formBtnVal[2];
-							alert('连接测试成功')
+							this.modal.modalContent = '连接成功';
+							this.modal.modalShow = true;
 						}
 					}, (res) => {
 						console.log('failed')
@@ -280,12 +309,13 @@
 			// SQL 连接测试   测试工作站数据源配置
 			testSQL() {
 				if (!this.formstate.form1.linkTest) {
-                   alert('请先测试数据库信息')
+                   this.modal.modalContent = '请先测试数据库信息';
+                   this.modal.modalShow = true;
                    return;
 				}
 				if (this.formstate.form2.$invalid) {
-					// todo 表单优化
-					alert('请填写完整数据')
+					this.modal.modalContent = '请填写完整数据';
+					this.modal.modalShow = true;
 					return;
 				} else {
 					this.axios.post(this.serverUrl, {
@@ -320,9 +350,8 @@
 						if (res.testResult === 'failed') {
 							// 标记工作站数据源连接不成功
 							this.formstate.form2.linkTest = false;
-							// todo
-							// 弹出框优化
-							alert('连接失败，请重试')
+							this.modal.modalContent = '连接失败，请重试';
+							this.modal.modalShow = true;
 							this.formControlObj.form2BtnVal = this.formBtnVal[0]
 						} else {
 							this.formstate.form2.linkTest = true;
