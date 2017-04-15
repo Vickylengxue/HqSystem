@@ -5,9 +5,7 @@
 	      	<p class="en-title">HQMS</p>
 	      	<p class="zh-title">排队叫号管理系统</p>
 	      </div>
-
 	    </div>
-
 	    <vue-form :state="formstate" @submit.prevent="saveForm" class="saveForm">
 	        <validate  class="form-group">
 	          <span>用户名</span>
@@ -21,7 +19,7 @@
 	      </vue-form>
 	</div>
 </template>
-<script >
+<script>
     import Vue from 'vue'
 	import VueForm from 'vue-form'
 	Vue.use(VueForm)
