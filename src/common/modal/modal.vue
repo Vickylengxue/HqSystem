@@ -18,8 +18,8 @@
 
               <div class="modal-footer">
                 <slot name="footer">
-                  <button class="modal-default-button" @click="$emit('close')">
-                    Exit
+                  <button class="btn btn-primary" @click="$emit('close')">
+                    确定
                   </button>
                 </slot>
               </div>
@@ -30,27 +30,10 @@
 </template>
 <script >
 export default {
-	name: 'modal',
-	data() {
-		return {
-		}
-	},
-	mounted() {
-	}
 }
 </script>
 
 <style scoped>
-
-	/*
-	 * The following styles are auto-applied to elements with
-	 * transition="modal" when their visibility is toggled
-	 * by Vue.js.
-	 *
-	 * You can easily play with the modal transition by editing
-	 * these styles.
-	 */
-
 	 .modal-mask {
 	   position: fixed;
 	   z-index: 9998;
@@ -58,7 +41,7 @@ export default {
 	   left: 0;
 	   width: 100%;
 	   height: 100%;
-	   background-color: rgba(0, 0, 0, .4);
+	   background-color: rgba(0, 0, 0, .7);
 	   display: table;
 	   transition: opacity .3s ease;
 	 }
@@ -86,6 +69,10 @@ export default {
 
 	 .modal-body {
 	   margin: 20px 0;
+	   border: 0px;
+	 }
+	 .modal-footer {
+	   border: 0px;
 	 }
 
 	 .modal-default-button {

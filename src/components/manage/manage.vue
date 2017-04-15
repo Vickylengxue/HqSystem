@@ -1,8 +1,8 @@
 <template lang="html">
 	<div class="manage">
 	    <div class="manage-header">
-            <ul>
-	            <li @click="goToState('stationList')">分诊台</li>
+            <ul class="clearfix">
+	            <li @click="goToState('stationList')" class="manage-tab">分诊台</li>
             </ul>
 	    </div>
 	    <keep-alive>
@@ -26,6 +26,18 @@
 .manage .manage-header {
 	height:120px;
 	background:#0097FB;
+}
+.manage .clearfix {
+	position: relative;
+	top:50%;
+	transform: translateY(-50%);
+	padding-left: 50px;
+}
+.manage-tab {
+	float: left;
+	color:#fff;
+	font-size: 36px;
+	height:50px;
 }
 
 </style>

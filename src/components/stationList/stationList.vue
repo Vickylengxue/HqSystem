@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="addStation">
+	<div class="">
 	       <div class="addStation">
 		       	<div class="addstation-text"  @click="goToState('addStation')">新建分诊台</div>
 	       </div>
@@ -94,7 +94,7 @@
 	width:150px;
     padding:10px 20px;
     text-align: center;
-    display: inline-block;
+    margin: 0 auto;
     background: -webkit-linear-gradient(left,#0097FB,#00CBFB);
     /* todo 渐变色 兼容性问题*/
     /*background: -moz-linear-gradient(left,#0097FB,#00CBFB);*/
@@ -104,5 +104,9 @@
     top:50%;
     transform: translateY(-50%);
 }
+.station-list {
+	padding-left: 20px;
+}
+
 
 </style>

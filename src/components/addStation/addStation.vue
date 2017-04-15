@@ -191,7 +191,6 @@
 	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
 	     		<p slot='body'>{{modal.modalContent}}</p>
 	     	</modal>
-	     	modal.modalContent
 	     </div>
 	</div>
 </template>
