@@ -10,6 +10,8 @@ import manage from 'components/manage/manage'
 import stationList from 'components/stationList/stationList'
 import station from 'components/station/station'
 import addStation from 'components/addStation/addStation'
+import addWorker from 'components/addWorker/addWorker'
+import addCaller from 'components/addCaller/addCaller'
 Vue.use(VueRouter)
 
 // 页面刷新时，重新赋值token
@@ -18,27 +20,57 @@ if (window.localStorage.getItem('token')) {
 }
 const routes = [{
     path: '/login',
-    component: login
+    component: login,
+    meta: {
+        keepAlive: true
+    }
 }, {
     path: '/manage',
     meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive: true
     },
     component: manage,
     children: [{
             name: 'stationList',
             path: '/stationList',
-            component: stationList
+            component: stationList,
+            meta: {
+                keepAlive: true
+            }
         },
         {
             name: 'station',
             path: '/station',
-            component: station
+            component: station,
+            // 增加一个meta字段，表明不要缓存
+            meta: {
+                keepAlive: false
+            }
         },
         {
             name: 'addStation',
             path: '/addStation',
-            component: addStation
+            component: addStation,
+            meta: {
+                keepAlive: true
+            }
+        },
+        {
+            name: 'addWorker',
+            path: '/addWorker',
+            component: addWorker,
+            meta: {
+                keepAlive: true
+            }
+        },
+        {
+            name: 'addCaller',
+            path: '/addCaller',
+            component: addCaller,
+            meta: {
+                keepAlive: true
+            }
         }
     ]
 }]

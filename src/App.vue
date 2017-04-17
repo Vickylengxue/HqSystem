@@ -17,7 +17,6 @@
           font-size 14px
           color rgb(240,20,20)
 </style>
-
 <template>
 <div>
   <keep-alive>

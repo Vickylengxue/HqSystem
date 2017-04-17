@@ -5,7 +5,7 @@
 	       </div>
 	       <middleLine height='20'></middleLine>
 		   	<div class="station-list">
-		   		<div v-for="station in stationList" class="card" @click="goToStationDetail(station.id)">
+		   		<div v-for="station in stationList" class="card" @click="goToStationDetail(station)">
 		   		    <div class="card-box" :style="{'backgroundImage':'url('+stationLogo+')'}"></div>
 		   			{{station.name}}
 		   		</div>
@@ -53,13 +53,14 @@
 					console.log('failed')
 				})
 			},
-			goToStationDetail(id) {
+			goToStationDetail(station) {
 				// todo
 				// 参数传递有点怪异
 				this.$router.push(
 					{ path: 'station',
 					query: {
-						id: id
+						id: station.id,
+						name: encodeURIComponent(station.name)
 					}
 				})
 			},

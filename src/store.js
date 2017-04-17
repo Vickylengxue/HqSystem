@@ -8,7 +8,10 @@ const store = new Vuex.Store({
     token: null,
     serverUrl: {
       login: 'http://192.168.17.187/hqueue/login',
-      station: 'http://192.168.17.187/hqueue/manager/station'
+      station: 'http://192.168.17.187/hqueue/manager/station',
+      worker: 'http://192.168.17.187/hqueue/manager/worker',
+      queueInfo: 'http://192.168.17.187/hqueue/manager/queueInfo',
+      caller: 'http://192.168.17.187/hqueue/manager/caller'
     }
   },
   mutations: {

@@ -1,16 +1,32 @@
 <template lang="html">
 	<div class="station">
                <div class="settings">
-	               <div class="btn btn-success">提交</div>
-	               <div class="btn btn-warning">取消</div>
+                  <div v-if="showInfoNumber == 0">
+   	               	<div class="btn btn-success" @click="add('/addWorker')">添加医生</div>
+                  </div>
+                 <div v-if="showInfoNumber == 1">
+  	               	<div class="btn btn-success" @click="add('/addCaller')">添加叫号器</div>
+                 </div>
+                  <div v-if="showInfoNumber == 2">
+   	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
+                  </div>
                </div>
                <middleLine height='20'></middleLine>
                <div class="station-content clearfix">
 	               <div class="nav-info">
-	               	   nav-info
+	               	   <div class="workList">
+	               	   	   
+	               	   </div>
+
+	               	   <div class="callerList">
+	               	   	   
+	               	   </div>
+	               	   <div class="queueList">
+	               	   	   <div class="noData" v-if="queueList.length == 0">没有队列</div>
+	               	   </div>
 	               </div>
                	   <div class="nav-bar">
-               	   	     <div class="station-name">{{stationInfo.name}}</div>
+               	   	     <div class="station-name">{{stationName}}</div>
                	   	     <div class="station-name" @click="showInfo(0)">医生信息</div>
                	   	     <div class="station-name" @click="showInfo(1)">叫号器</div>
                	   	     <div class="station-name" @click="showInfo(2)">队列</div>
@@ -24,42 +40,31 @@
 		name: 'station',
 		data() {
 			return {
-				stationInfo: ''
-				// name: '',
-				// describe: ''
-				// DBType: 'mysql',
-				// host: '192.168.17.184',
-				// port: '3306',
-				// charset: 'utf8',
-				// user: 'root',
-				// passwd: '123456',
-				// DBName: 'HisQueue',
-				// tableName: 'visitors',
-				// aliasName: 'name',
-				// aliasAge: 'age',
-				// aliasQueue: 'quene',
-				// aliasID: 'ID',
-				// aliasOrderDate: 'orderDate',
-				// aliasOrderTime: 'orderTime',
-				// aliasRegistDate: 'registDate',
-				// aliasRegistTime: 'registTime',
-				// aliasVIP: 'emergency',
-				// aliasSnumber: 'snumber',
-				// aliasOrderType: 'orderType',
-				// aliasWorkerID: 'workerID',
-				// aliasWorkerName: 'workerName',
-				// aliasDepartment: 'department',
-				// aliasDescText: 'descText',
-				// aliasStatus: 'status',
-				// renewPeriod: '10s'
+				showInfoNumber: 0,
+				stationInfo: '',
+				workerList: '',
+				queueList: '',
+				callerList: ''
 			}
 		},
 		computed: {
 			serverUrl() {
 				return this.$store.state.serverUrl.station
 			},
+			workerUrl() {
+				return this.$store.state.serverUrl.worker
+			},
+			queueInfoUrl() {
+				return this.$store.state.serverUrl.queueInfo
+			},
+			callerUrl() {
+				return this.$store.state.serverUrl.caller
+			},
 			stationID() {
-				return this.$route.query.id
+				return this.$route.query.id;
+			},
+			stationName() {
+				return decodeURIComponent(this.$route.query.name);
 			}
 		},
 		components: {
@@ -73,18 +78,40 @@
 		},
 		methods: {
 			_init() {
-				this.axios.post(this.serverUrl, {
-					action: 'getInfo',
+				this.axios.post(this.workerUrl, {
+					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.stationInfo = res;
-					console.log(res)
+					this.workerList = res.workerList;
+				}, (res) => {
+					console.log('failed')
+				})
+				this.axios.post(this.queueInfoUrl, {
+					action: 'getList',
+					stationID: this.stationID
+				}).then((res) => {
+					this.queueList = res.list;
+				}, (res) => {
+					console.log('failed')
+				})
+				this.axios.post(this.callerUrl, {
+					action: 'getList',
+					stationID: this.stationID
+				}).then((res) => {
+					this.callerList = res.list;
 				}, (res) => {
 					console.log('failed')
 				})
 			},
 			// 显示右侧内容 0 医生信息  1 叫号器信息  2  队列信息
 			showInfo(num) {
+				this.showInfoNumber = num;
+			},
+			add(state) {
+				console.log(this.stationID, state)
+				this.$router.push(state, {
+					stationID: this.stationID
+				})
 			}
 		}
 	}
