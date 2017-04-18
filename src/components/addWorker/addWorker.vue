@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="addStation">
+	<div class="addWorker">
 	     <div class="container">
 	     	<div class="row settings">
 	     		<div class="btn btn-success" @click="addStation">保存</div>
@@ -7,7 +7,8 @@
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
-	     		<h2>基础信息</h2>
+	     		    <h2>新建医生信息</h2>
+	     			<h4>基础信息</h4>
 	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
@@ -145,7 +146,8 @@
                        this.modal.modalShow = true;
                        this.modal.modalContent = '保存成功';
 					}, (res) => {
-                        console.log('failed')
+                        this.modal.modalShow = true;
+                        this.modal.modalContent = '保存失败';
 					})
 				}
 			}

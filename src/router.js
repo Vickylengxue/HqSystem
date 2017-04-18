@@ -12,6 +12,7 @@ import station from 'components/station/station'
 import addStation from 'components/addStation/addStation'
 import addWorker from 'components/addWorker/addWorker'
 import addCaller from 'components/addCaller/addCaller'
+import addQueue from 'components/addQueue/addQueue'
 Vue.use(VueRouter)
 
 // 页面刷新时，重新赋值token
@@ -60,6 +61,14 @@ const routes = [{
             name: 'addWorker',
             path: '/addWorker',
             component: addWorker,
+            meta: {
+                keepAlive: false
+            }
+        },
+        {
+            name: 'addQueue',
+            path: '/addQueue',
+            component: addQueue,
             meta: {
                 keepAlive: false
             }

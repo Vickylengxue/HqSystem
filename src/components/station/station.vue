@@ -3,34 +3,74 @@
                <div class="settings">
                   <div v-if="showInfoNumber == 0">
    	               	<div class="btn btn-success" @click="add('/addWorker')">添加医生</div>
+   	               	<div class="btn btn-success" @click="add('/addWorker')">批量添加医生</div>
                   </div>
+                 <div v-if="showInfoNumber == 2">
+  	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
+                 </div>
                  <div v-if="showInfoNumber == 1">
   	               	<div class="btn btn-success" @click="add('/addCaller')">添加叫号器</div>
                  </div>
-                  <div v-if="showInfoNumber == 2">
-   	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
-                  </div>
                </div>
                <middleLine height='20'></middleLine>
                <div class="station-content clearfix">
+	               <div class="nav-bar">
+	               	     <div class="station-name">{{stationName}}</div>
+	               	     <div class="station-name" @click="showInfo(0)">医生信息</div>
+	               	     <div class="station-name" @click="showInfo(2)">队列</div>
+	               	     <div class="station-name" @click="showInfo(1)">叫号器</div>
+	               </div>
 	               <div class="nav-info">
-	               	   <div class="workList">
-	               	   	   
+	               	   <div class="workList" v-if="showInfoNumber == 0">
+	               	   	   <table class="table">
+	               	   	        <tr>
+	               	   	        	<th>姓名</th>
+	               	   	        	<th>职务</th>
+	               	   	        </tr>
+	               	   	   	    <tbody>
+	               	   	   	        <div class="noData" v-if="workerList.length == 0">没有医生</div>
+	               	   	   	        <tr v-for="worker in workerList">
+	               	   	   	        	<td>{{worker.name}}</td>
+	               	   	   	        	<td>{{worker.title}}</td>
+	               	   	   	        </tr>	
+	               	   	   	    	
+	               	   	   	    </tbody>
+	               	   	   </table>
 	               	   </div>
-
-	               	   <div class="callerList">
-	               	   	   
+	               	   <div class="callerList" v-if="showInfoNumber == 1">
+		               	   <table class="table">
+		               	        <tr>
+		               	        	<th>姓名</th>
+		               	        	<th>职务</th>
+		               	        </tr>
+		               	   	    <tbody>
+		               	   	        <div class="noData" v-if="queueList.length == 0">没有队列</div>
+		               	   	        <tr v-for="worker in workerList">
+		               	   	        	<td>{{worker.name}}</td>
+		               	   	        	<td>{{worker.title}}</td>
+		               	   	        </tr>	
+		               	   	    	
+		               	   	    </tbody>
+		               	   </table>
 	               	   </div>
-	               	   <div class="queueList">
-	               	   	   <div class="noData" v-if="queueList.length == 0">没有队列</div>
+	               	   <div class="queueList" v-if="showInfoNumber == 2">
+		               	   <table class="table">
+		               	        <tr>
+		               	        	<th>姓名</th>
+		               	        	<th>职务</th>
+		               	        </tr>
+		               	   	    <tbody>
+		               	   	         <div class="noData" v-if="queueList.length == 0">没有队列</div>
+		               	   	        <tr v-for="worker in workerList">
+		               	   	        	<td>{{worker.name}}</td>
+		               	   	        	<td>{{worker.title}}</td>
+		               	   	        </tr>	
+		               	   	    	
+		               	   	    </tbody>
+		               	   </table>
 	               	   </div>
 	               </div>
-               	   <div class="nav-bar">
-               	   	     <div class="station-name">{{stationName}}</div>
-               	   	     <div class="station-name" @click="showInfo(0)">医生信息</div>
-               	   	     <div class="station-name" @click="showInfo(1)">叫号器</div>
-               	   	     <div class="station-name" @click="showInfo(2)">队列</div>
-               	   </div>
+
                </div>
 	</div>
 </template>
@@ -90,9 +130,10 @@
 					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
+					console.log(res)
 					this.queueList = res.list;
 				}, (res) => {
-					console.log('failed')
+					console.log('failed ')
 				})
 				this.axios.post(this.callerUrl, {
 					action: 'getList',
