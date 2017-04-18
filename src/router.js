@@ -11,6 +11,7 @@ import stationList from 'components/stationList/stationList'
 import station from 'components/station/station'
 import addStation from 'components/addStation/addStation'
 import addWorker from 'components/addWorker/addWorker'
+import batchAddWorker from 'components/batchAddWorker/batchAddWorker'
 import addCaller from 'components/addCaller/addCaller'
 import addQueue from 'components/addQueue/addQueue'
 Vue.use(VueRouter)
@@ -66,11 +67,19 @@ const routes = [{
             }
         },
         {
+            name: 'batchAddWorker',
+            path: '/batchAddWorker',
+            component: batchAddWorker,
+            meta: {
+                keepAlive: false
+            }
+        },
+        {
             name: 'addQueue',
             path: '/addQueue',
             component: addQueue,
             meta: {
-                keepAlive: false
+                keepAlive: true
             }
         },
         {

@@ -26,7 +26,8 @@
 	     	</div>
 	     	<middleLine height='10'></middleLine>
 	     	<div class="row baseinfo">
-	     		<h2>数据库信息</h2>
+	     	    <h2>新建分诊台</h2>
+	     		<h4>数据库信息</h4>
 	     		<vue-form :state="formstate.form1"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库地址</label>

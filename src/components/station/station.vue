@@ -3,7 +3,7 @@
                <div class="settings">
                   <div v-if="showInfoNumber == 0">
    	               	<div class="btn btn-success" @click="add('/addWorker')">添加医生</div>
-   	               	<div class="btn btn-success" @click="add('/addWorker')">批量添加医生</div>
+   	               	<div class="btn btn-success" @click="add('/batchAddWorker')">批量添加医生</div>
                   </div>
                  <div v-if="showInfoNumber == 2">
   	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
@@ -70,7 +70,6 @@
 		               	   </table>
 	               	   </div>
 	               </div>
-
                </div>
 	</div>
 </template>
@@ -167,7 +166,7 @@
 	position: static;
 	line-height: 140px
 }
- .settings>div {
+/* .settings>div {
  	position: absolute;
  	color:#fff;
  	display: inline-block;
@@ -178,7 +177,7 @@
  	width:112px;
     line-height: 58px;
     padding:0;
- }
+ }*/
  .station-content .nav-bar {
     width:200px;
     float: left;

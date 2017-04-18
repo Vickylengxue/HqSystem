@@ -161,7 +161,7 @@ input {
 	position: static;
 	line-height: 140px
 }
- .settings>div {
+ .settings > div {
  	position: absolute;
  	color:#fff;
  	display: inline-block;

@@ -7,8 +7,8 @@
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
-	     		    <h2>新建医生信息</h2>
-	     			<h4>基础信息</h4>
+     		    <h2>添加医生信息</h2>
+     			<h4>基础信息</h4>
 	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
