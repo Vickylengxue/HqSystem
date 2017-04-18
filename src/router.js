@@ -61,7 +61,7 @@ const routes = [{
             path: '/addWorker',
             component: addWorker,
             meta: {
-                keepAlive: true
+                keepAlive: false
             }
         },
         {

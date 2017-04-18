@@ -1,8 +1,6 @@
 var checkVversions = require('./check-versions')
 checkVversions()
 var config = require('../config')
-console.log(config)
-console.log(process.env)
 if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 var path = require('path')
 var express = require('express')

@@ -365,7 +365,7 @@
 			cancel() {
 				// todo
 				// 切换回去 有缓存
-				this.$router.push('/stationList')
+				this.$router.go(-1)
 			}
 		}
 	}

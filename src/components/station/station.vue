@@ -108,9 +108,11 @@
 				this.showInfoNumber = num;
 			},
 			add(state) {
-				console.log(this.stationID, state)
-				this.$router.push(state, {
-					stationID: this.stationID
+				this.$router.push({
+					path: state,
+					query: {
+						stationID: this.stationID
+					}
 				})
 			}
 		}

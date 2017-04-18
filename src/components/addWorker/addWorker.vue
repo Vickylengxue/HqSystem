@@ -2,7 +2,7 @@
 	<div class="addStation">
 	     <div class="container">
 	     	<div class="row settings">
-	     		<div class="btn btn-success" >保存</div>
+	     		<div class="btn btn-success" @click="addStation">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
@@ -36,7 +36,7 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">简介</label>
 	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.name" required name="user" class="form-control"></textarea>
+	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -97,7 +97,7 @@
 		},
 		computed: {
 			stationID() {
-				return this.$route.query.id;
+				return this.$route.query.stationID;
 			},
 			serverUrl() {
 				return this.$store.state.serverUrl.worker
@@ -115,13 +115,39 @@
 		},
 		methods: {
 			_init() {
-				this.formControlObj.form1BtnVal = this.formBtnVal[1]
-				this.formControlObj.form2BtnVal = this.formBtnVal[1]
 			},
 			cancel() {
 				// todo
 				// 切换回去 有缓存
 				this.$router.go(-1)
+			},
+			addStation() {
+				if (this.formstate.$invalid) {
+					this.modal.modalShow = true;
+					this.modal.modalContent = '请填写完整数据';
+				} else {
+					this.form.user = this.form.name;
+					console.log(this.stationID)
+					this.axios.post(this.serverUrl, {
+						action: 'add',
+						stationID: this.stationID,
+						id: this.form.id,
+						name: this.form.name,
+						title: this.form.title,
+						department: this.form.department,
+						descText: this.form.descText,
+						user: this.form.user,
+	                    password: this.form.password,
+	                    // headPic: this.form.headPic
+	                    headPic: 'www.baidu.com'
+					}).then((res) => {
+                       console.log(res)
+                       this.modal.modalShow = true;
+                       this.modal.modalContent = '保存成功';
+					}, (res) => {
+                        console.log('failed')
+					})
+				}
 			}
 		}
 	}
