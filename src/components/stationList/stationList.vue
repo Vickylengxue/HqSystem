@@ -30,7 +30,7 @@
 		},
 		computed: {
 			serverUrl() {
-				return this.$store.getters.postUrl('station')
+				return this.$store.getters.postUrl('manager', 'station')
 			}
 		},
 		components: {

@@ -27,8 +27,9 @@ const store = new Vuex.Store({
   },
   getters: {
     postUrl(state) {
-          return (url) => {
-              return state.serverUrl + url;
+          return (...url) => {
+              let restful = url.join('/')
+              return state.serverUrl + restful;
           }
       }
   }
