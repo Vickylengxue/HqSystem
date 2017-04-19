@@ -8,8 +8,7 @@ var env = process.env.NODE_ENV
   // various preprocessor loaders added to vue-loader at the end of this file
 var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
-console.log(cssSourceMapDev,'cssSourceMapDev')
-console.log(cssSourceMapProd,'cssSourceMapProd')
+
 
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 

@@ -9,11 +9,11 @@
 	    <vue-form :state="formstate" @submit.prevent="saveForm" class="saveForm">
 	        <validate  class="form-group">
 	          <span>用户名</span>
-	          <input v-model="form.userName" required name="userName" class="form-control" :class="{'form-control':formClass.formControl}"/>
+	          <input v-model="form.userName" required name="userName" class="form-control"  :class="[fieldClassName(formstate.userName)]"/>
 	        </validate>
 	        <validate  class="form-group">
 	          <span>密码</span>
-	          <input v-model="form.passwd" :class="{'form-control':formClass.formControl}" name="passwd" type="password" required />
+	          <input v-model="form.passwd" class="form-control" name="passwd" type="password" required :class="[fieldClassName(formstate.passwd)]" />
 	        </validate>
 	        <button type="submit" class="btn btn-primary btn-block">登录</button>
 	      </vue-form>
@@ -50,12 +50,10 @@
 		},
 		methods: {
 			saveForm() {
-				console.log(this.formstate)
 				if (this.formstate.$invalid) {
 					console.log('failed')
 					return;
 				}
-
 				this.axios.post(this.serverUrl, {
 					action: 'GetToken',
 					userName: this.form.userName,
@@ -69,6 +67,17 @@
 				}, (res) => {
 					console.log('failed')
 				})
+			},
+			fieldClassName(field) {
+			     if (!field) {
+			       return '';
+			     }
+			     if ((field.$touched || field.$submitted) && field.$valid) {
+			       return 'has-success';
+			     }
+			     if ((field.$touched || field.$submitted) && field.$invalid) {
+			       return 'has-danger';
+			     }
 			}
 		}
 	}
@@ -104,6 +113,9 @@
 .saveForm {
 	width:400px;
 	margin:20px auto 0;
+}
+.saveForm .has-danger {
+    border:1px solid red;
 }
 
 </style>

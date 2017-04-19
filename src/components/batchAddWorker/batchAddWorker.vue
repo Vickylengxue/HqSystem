@@ -13,53 +13,93 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库地址</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.host" required name="host" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.host" required name="host" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">用户名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.user" required name="user" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.user" required name="user" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">密码</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.passwd" required name="passwd" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.passwd" required name="passwd" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">端口</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.port" required name="port" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.port" required name="port" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字符集</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.charset" required name="charset" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.charset" required name="charset" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBName" required name="DBName" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.DBName" required name="DBName" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库类型</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBType" required name="DBType" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.DBType" required name="DBType" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库表名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.tableName" required name="table" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.table" required name="table" :class="{'form-control':formControlObj.formControl}" />
 	     		      </div>
 	     		    </validate>
-	     		    <button type="submit" class="center-block">{{formControlObj.form1BtnVal}}</button>
+	     		    <button type="submit" class="center-block btn btn btn-primary">{{formControlObj.form1BtnVal}}</button>
 	     		  </vue-form>
+	     		  <h4>SQL信息</h4>
+	     		  <vue-form :state="formstate.form2"  class="form-horizontal" @submit.prevent="testSQL">
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(ID)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasID" required name="host" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(Name)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasName" required name="user" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(title)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasTitle"  name="passwd" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(Department)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasDepartment"  name="charset" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(DescText)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasDescText"  name="DBName" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <validate  class="form-group">
+	     		        <label  class="col-sm-2 control-label">字段别名(HeadPic)</label>
+	     		        <div class="col-sm-10">
+	     		        	<input v-model="form.aliasHeadPic"  name="port" :class="{'form-control':formControlObj.formControl}" />
+	     		        </div>
+	     		      </validate>
+	     		      <button type="submit" class="center-block btn btn btn-primary">{{formControlObj.form2BtnVal}}</button>
+	     		    </vue-form>
 	     	</div>
 	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
 	     		<p slot='body'>{{modal.modalContent}}</p>
@@ -78,7 +118,8 @@
 		data() {
 			return {
 				formstate: {
-					form1: {}
+					form1: {},
+					form2: {}
 				},
 				form: {
 					name: '',
@@ -92,22 +133,11 @@
 					DBName: 'HisQueue',
 					table: 'workers_import',
 					aliasName: 'name',
-					aliasAge: 'age',
-					aliasQueue: 'quene',
-					aliasID: 'ID',
-					aliasOrderDate: 'orderDate',
-					aliasOrderTime: 'orderTime',
-					aliasRegistDate: 'registDate',
-					aliasRegistTime: 'registTime',
-					aliasVIP: 'emergency',
-					aliasSnumber: 'snumber',
-					aliasOrderType: 'orderType',
-					aliasWorkerID: 'workerID',
-					aliasWorkerName: 'workerName',
+					aliasID: 'id',
+					aliasTitle: 'title',
 					aliasDepartment: 'department',
 					aliasDescText: 'descText',
-					aliasStatus: 'status',
-					renewPeriod: '10s'
+					aliasHeadPic: ''
 				},
 				formControlObj: {
 					form1BtnVal: '',
@@ -141,13 +171,14 @@
 		methods: {
 			_init() {
 				this.formControlObj.form1BtnVal = this.formBtnVal[1]
+				this.formControlObj.form2BtnVal = this.formBtnVal[1]
 			},
 			cancel() {
 				// todo
 				// 切换回去 有缓存
 				this.$router.go(-1)
 			},
-			// 测试工作站数据源，测试数据库
+			// 测试数据库连接  测试工作站数据源，测试数据库
 			testDB() {
 				if (this.formstate.form1.$invalid) {
 					// todo 表单需要优化
@@ -156,7 +187,7 @@
 				} else {
 					this.axios.post(this.workerUrl, {
 						action: 'testSource',
-						// stationID: this.stationID,
+						stationID: this.stationID,
 						DBType: this.form.DBType,
 						host: this.form.host,
 						port: this.form.port,
@@ -164,7 +195,7 @@
 						user: this.form.user,
 						passwd: this.form.passwd,
 						DBName: this.form.DBName,
-						tableName: this.form.tableName
+						table: this.form.table
 					}).then((res) => {
 						if (res.result === 'failed') {
 							// 标记工作站数据源连接不成功
@@ -175,6 +206,57 @@
 						} else {
 							this.formstate.form1.linkTest = true;
 							this.formControlObj.form1BtnVal = this.formBtnVal[2];
+							this.modal.modalContent = '连接成功';
+							this.modal.modalShow = true;
+						}
+					}, (res) => {
+						console.log(res)
+						console.log('failed')
+					})
+				}
+			},
+			// 测试 sql 连接   测试工作站数据源，测试数据库
+			testSQL() {
+				if (!this.formstate.form1.linkTest) {
+                   this.modal.modalContent = '请先测试数据库信息';
+                   this.modal.modalShow = true;
+                   return;
+				}
+				if (this.formstate.form2.$invalid) {
+					// todo 表单需要优化
+					this.modal.modalContent = '请填写完整数据';
+					this.modal.modalShow = true;
+				} else {
+					if (this.form.aliasHeadPic.length === 0) {
+						this.form.aliasHeadPic = '';
+					}
+					this.axios.post(this.workerUrl, {
+						action: 'testSourceConfig',
+						stationID: this.stationID,
+						DBType: this.form.DBType,
+						host: this.form.host,
+						port: this.form.port,
+						charset: this.form.charset,
+						user: this.form.user,
+						passwd: this.form.passwd,
+						DBName: this.form.DBName,
+						table: this.form.table,
+						aliasName: this.form.aliasName,
+						aliasID: this.form.aliasID,
+						aliasTitle: this.form.aliasTitle,
+						aliasDepartment: this.form.aliasDepartment,
+						aliasDescText: this.form.aliasDescText,
+						aliasHeadPic: this.form.aliasHeadPic
+					}).then((res) => {
+						if (res.result === 'failed') {
+							// 标记工作站数据源连接不成功
+							this.formstate.form2.linkTest = false;
+							this.modal.modalContent = '连接失败，请重试';
+							this.modal.modalShow = true;
+							this.formControlObj.form2BtnVal = this.formBtnVal[0]
+						} else {
+							this.formstate.form2.linkTest = true;
+							this.formControlObj.form2BtnVal = this.formBtnVal[2];
 							this.modal.modalContent = '连接成功';
 							this.modal.modalShow = true;
 						}

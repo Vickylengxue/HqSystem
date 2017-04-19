@@ -13,13 +13,13 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">分诊台名称</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.host" required name="host" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.host" required name="host"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">分诊台描述</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.user" required name="user" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.user" required name="user"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		  </vue-form>
@@ -32,49 +32,49 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库地址</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.host" required name="host" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.host" required name="host"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">用户名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.user" required name="user" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.user" required name="user"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">密码</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.passwd" required name="passwd" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.passwd" required name="passwd"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">端口</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.port" required name="port" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.port" required name="port"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字符集</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.charset" required name="charset" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.charset" required name="charset"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBName" required name="DBName" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.DBName" required name="DBName"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库类型</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBType" required name="DBType" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.DBType" required name="DBType"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库表名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.tableName" required name="table" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.tableName" required name="table"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <button type="submit" class="center-block">{{formControlObj.form1BtnVal}}</button>
@@ -87,103 +87,103 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Name)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasName" required name="aliasName" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasName" required name="aliasName"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Age)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasAge" required name="aliasAge" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasAge" required name="aliasAge"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Queue)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasQueue" required name="aliasQueue" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasQueue" required name="aliasQueue"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(ID)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasID" required name="aliasID" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasID" required name="aliasID"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(OrderDate)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasOrderDate" required name="aliasOrderDate" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasOrderDate" required name="aliasOrderDate"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(OrderDate)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasOrderTime" required name="aliasOrderTime" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasOrderTime" required name="aliasOrderTime"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(OrderDate)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasRegistDate" required name="aliasRegistDate" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasRegistDate" required name="aliasRegistDate"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(RegistTime)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasRegistTime" required name="aliasRegistTime" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasRegistTime" required name="aliasRegistTime"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(VIP)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasVIP" required name="aliasVIP" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasVIP" required name="aliasVIP"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Number)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasSnumber" required name="aliasSnumber" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasSnumber" required name="aliasSnumber"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(OrderType)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasOrderType" required name="aliasOrderType" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasOrderType" required name="aliasOrderType"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(WorkerID)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasWorkerID" required name="aliasWorkerID" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasWorkerID" required name="aliasWorkerID"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(WorkerName)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasWorkerName" required name="aliasWorkerName" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasWorkerName" required name="aliasWorkerName"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Department)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasDepartment" required name="aliasDepartment" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasDepartment" required name="aliasDepartment"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(DescText)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasDescText" required name="aliasDescText" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasDescText" required name="aliasDescText"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(Status)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.aliasStatus" required name="aliasStatus" class="form-control" :class="{'form-control':formControlObj.formControl}"/>
+	     		      	<input v-model="form.aliasStatus" required name="aliasStatus"  :class="{'form-control':formControlObj.formControl}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字段别名(renewPeriod)</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.renewPeriod" required name="renewPeriod" class="form-control" :class="{'form-control':formControlObj.form1BtnVal}"/>
+	     		      	<input v-model="form.renewPeriod" required name="renewPeriod"  :class="{'form-control':formControlObj.form1BtnVal}"/>
 	     		      </div>
 	     		    </validate>
 	     		    <button type="submit" class="center-block">{{formControlObj.form2BtnVal}}</button>
