@@ -30,7 +30,7 @@
 		},
 		computed: {
 			serverUrl() {
-				return this.$store.state.serverUrl.station
+				return this.$store.getters.postUrl('station')
 			}
 		},
 		components: {

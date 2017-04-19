@@ -101,7 +101,7 @@
 				return this.$route.query.stationID;
 			},
 			serverUrl() {
-				return this.$store.state.serverUrl.worker
+				return this.$store.getters.postUrl('worker')
 			}
 		},
 		components: {

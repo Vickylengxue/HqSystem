@@ -88,16 +88,16 @@
 		},
 		computed: {
 			serverUrl() {
-				return this.$store.state.serverUrl.station
+				return this.$store.getters.postUrl('station')
 			},
 			workerUrl() {
-				return this.$store.state.serverUrl.worker
+				return this.$store.getters.postUrl('worker')
 			},
 			queueInfoUrl() {
-				return this.$store.state.serverUrl.queueInfo
+				return this.$store.getters.postUrl('queueInfo')
 			},
 			callerUrl() {
-				return this.$store.state.serverUrl.caller
+				return this.$store.getters.postUrl('caller')
 			},
 			stationID() {
 				return this.$route.query.id;

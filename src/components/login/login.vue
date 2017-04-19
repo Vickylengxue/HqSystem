@@ -40,20 +40,20 @@
 		},
 		computed: {
 			serverUrl() {
-				return this.$store.state.serverUrl.login
+				return this.$store.getters.postUrl('login')
 			}
 		},
 		components: {
 		},
 		mounted() {
-			console.log(this.serverUrl)
-			console.log(this.$route.router)
+			console.log(this.$router)
 		},
 		methods: {
 			saveForm() {
 				if (this.formstate.$invalid) {
 					return;
 				}
+				console.log(this.serverUrl)
 				this.axios.post(this.serverUrl, {
 					action: 'GetToken',
 					userName: this.form.userName,

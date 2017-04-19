@@ -96,7 +96,7 @@
 				return this.$route.query.stationID;
 			},
 			serverUrl() {
-				return this.$store.state.serverUrl.queueInfo
+				return this.$store.getters.postUrl('queueInfo')
 			}
 		},
 		components: {
