@@ -13,13 +13,13 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库地址</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.host" required name="host" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.host" required name="host" :class="[fieldClassName(formstate.form1.host),'form-control']"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">用户名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.user" required name="user" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.user" required name="user" :class="[fieldClassName(formstate.form1.user),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -112,6 +112,7 @@
     import middleLine from '../../common/middleLine/middleLine'
     import VueForm from 'vue-form'
     import modal from '../../common/modal/modal'
+    import utils from 'common/utils/utils.js'
     Vue.use(VueForm)
 	export default {
 		name: 'batchAddWorker',
@@ -172,11 +173,6 @@
 			_init() {
 				this.formControlObj.form1BtnVal = this.formBtnVal[1]
 				this.formControlObj.form2BtnVal = this.formBtnVal[1]
-			},
-			cancel() {
-				// todo
-				// 切换回去 有缓存
-				this.$router.go(-1)
 			},
 			// 测试数据库连接  测试工作站数据源，测试数据库
 			testDB() {
@@ -293,6 +289,14 @@
                         this.modal.modalContent = '保存失败';
 					})
 				}
+			},
+			cancel() {
+				// todo
+				// 切换回去 有缓存
+				this.$router.go(-1)
+			},
+			fieldClassName(field) {
+	            return utils.fieldClassName(field)
 			}
 		}
 	}
@@ -304,9 +308,11 @@ h2 {
 	border-bottom: 1px solid #f1f1f1;
 }
 input {
-	border:0px;
+	border-top:0px;
+	border-left:0px;
+	border-right:0px;
 	box-shadow: 0 0 ;
-	border-bottom: 1px solid #f1f1f1;
+	/*border-bottom: 1px solid #f1f1f1;*/
 }
 .settings {
 	text-align: center;

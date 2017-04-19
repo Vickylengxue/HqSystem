@@ -22,6 +22,7 @@
 <script>
     import Vue from 'vue'
 	import VueForm from 'vue-form'
+	import utils from 'common/utils/utils.js'
 	Vue.use(VueForm)
 	export default {
 		name: 'login',
@@ -51,7 +52,6 @@
 		methods: {
 			saveForm() {
 				if (this.formstate.$invalid) {
-					console.log('failed')
 					return;
 				}
 				this.axios.post(this.serverUrl, {
@@ -69,15 +69,7 @@
 				})
 			},
 			fieldClassName(field) {
-			     if (!field) {
-			       return '';
-			     }
-			     if ((field.$touched || field.$submitted) && field.$valid) {
-			       return 'has-success';
-			     }
-			     if ((field.$touched || field.$submitted) && field.$invalid) {
-			       return 'has-danger';
-			     }
+               return utils.fieldClassName(field)
 			}
 		}
 	}
@@ -114,8 +106,6 @@
 	width:400px;
 	margin:20px auto 0;
 }
-.saveForm .has-danger {
-    border:1px solid red;
-}
+
 
 </style>
