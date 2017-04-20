@@ -12,8 +12,8 @@
 	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
-	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.id" required name="host" class="form-control" />
+	     		      <div class="col-sm-10 clearfix">
+	     		      	<input v-model="form.id" required name="host" class="form-control" v-on:blur="verifyID"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -87,7 +87,8 @@
 					descText: '',
 					user: '',
                     password: '123456',
-                    headPic: ''
+                    headPic: '',
+                    verifyIDFlag: false
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
@@ -101,7 +102,7 @@
 				return this.$route.query.stationID;
 			},
 			serverUrl() {
-				return this.$store.getters.postUrl('worker')
+				return this.$store.getters.postUrl('manager', 'worker')
 			}
 		},
 		components: {
@@ -114,13 +115,13 @@
 		mounted() {
 			console.log(this.$route.name, this.$route, this.$route.query)
 		},
+		watch: {
+			'form.id': function(val, oldval) {
+                this.form.verifyIDFlag = true;
+			}
+		},
 		methods: {
 			_init() {
-			},
-			cancel() {
-				// todo
-				// 切换回去 有缓存
-				this.$router.go(-1)
 			},
 			addStation() {
 				if (this.formstate.$invalid) {
@@ -150,6 +151,31 @@
                         this.modal.modalContent = '保存失败';
 					})
 				}
+			},
+			cancel() {
+				// todo
+				// 切换回去 有缓存
+				this.$router.go(-1)
+			},
+			verifyID() {
+				if (!this.form.verifyIDFlag) {
+					return;
+				}
+				this.axios.post(this.serverUrl, {
+					action: 'checkID',
+					stationID: this.stationID,
+					id: this.form.id
+				}).then((res) => {
+					console.log(res)
+					if (res.conflict === 0) {
+                        this.form.verifyIDFlag = false;
+					} else if (res.conflict === 1) {
+						this.form.verifyIDFlag = false;
+	                    this.modal.modalShow = true;
+	                    this.modal.modalContent = '该账号已被占用';
+					}
+				}, (res) => {
+				})
 			}
 		}
 	}
