@@ -43,6 +43,7 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">头像</label>
 	     		      <div class="col-sm-10">
+	     		      <!-- todo 上传 功能 -->
 	     		      	上传
 	     		      </div>
 	     		    </validate>

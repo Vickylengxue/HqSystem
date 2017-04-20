@@ -46,6 +46,25 @@
 	     		      	上传
 	     		      </div>
 	     		    </validate>
+         		    <h4>策略配置</h4>
+         		    <div class="form-group">
+	         		    <div  class="form-group" v-for="(sceneSupport, index) in sceneSupportList">
+		         		    <div class="col-sm-2 ">
+		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="sceneSupportRadio"  :value="sceneSupport" >
+		         		    </div>
+	         		        <div  class="col-sm-10 ">{{sceneSupport}}</div>
+	         		    </div>
+         		    </div>
+         		    <h4>所属医生</h4>
+         		    <div class="form-group">
+	         		    <div  class="form-group" v-for="worker in workerList">
+		         		    <div class="col-sm-2 ">
+		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="workerListCheckbox"  :value="worker.id" >
+		         		    </div>
+	         		        <div  class="col-sm-10 ">{{worker.name}}</div>
+
+	         		    </div>
+         		    </div>
 	     		    <h4>账号信息</h4>
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">账号</label>
@@ -88,15 +107,22 @@
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				}
+				},
+				workerList: '',
+				workerListCheckbox: [],
+				sceneSupportList: '',
+				sceneSupportRadio: ''
 			}
 		},
 		computed: {
 			stationID() {
 				return this.$route.query.stationID;
 			},
-			serverUrl() {
-				return this.$store.getters.postUrl('queueInfo')
+			workerUrl() {
+				return this.$store.getters.postUrl('manager', 'worker')
+			},
+			queueInfoUrl() {
+				return this.$store.getters.postUrl('manager', 'queueInfo')
 			}
 		},
 		components: {
@@ -111,11 +137,8 @@
 		},
 		methods: {
 			_init() {
-			},
-			cancel() {
-				// todo
-				// 切换回去 有缓存
-				this.$router.go(-1)
+				this.getWorkerList()
+				this.getSceneSupportList()
 			},
 			addQueue() {
 				if (this.formstate.$invalid) {
@@ -123,18 +146,14 @@
 					this.modal.modalContent = '请填写完整数据';
 				} else {
 					this.form.user = this.form.name;
-					this.axios.post(this.serverUrl, {
+					this.axios.post(this.queueInfoUrl, {
 						action: 'add',
 						stationID: this.stationID,
-						id: this.form.id,
 						name: this.form.name,
-						title: this.form.title,
-						department: this.form.department,
+						scene: this.sceneSupportRadio,
 						descText: this.form.descText,
-						user: this.form.user,
-	                    password: this.form.password,
-	                    // headPic: this.form.headPic
-	                    headPic: 'www.baidu.com'
+						// filter:
+						workerLimit: this.workerListCheckbox
 					}).then((res) => {
                        console.log(res)
                        this.modal.modalShow = true;
@@ -144,6 +163,33 @@
                         this.modal.modalContent = '保存失败';
 					})
 				}
+			},
+			getWorkerList() {
+				this.axios.post(this.workerUrl, {
+					action: 'getList',
+					stationID: this.stationID
+				}).then((res) => {
+					this.workerList = res.workerList;
+				}, (res) => {
+					console.log('failed')
+				})
+			},
+			// 策略列表
+			getSceneSupportList() {
+				this.axios.post(this.queueInfoUrl, {
+					action: 'getSceneSupportList',
+					stationID: this.stationID
+				}).then((res) => {
+					this.sceneSupportList = res.list;
+					console.log(this.sceneSupportList)
+				}, (res) => {
+					console.log('failed')
+				})
+			},
+			cancel() {
+				// todo
+				// 切换回去 有缓存
+				this.$router.go(-1)
 			}
 		}
 	}

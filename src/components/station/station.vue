@@ -5,10 +5,10 @@
    	               	<div class="btn btn-success" @click="add('/addWorker')">添加医生</div>
    	               	<div class="btn btn-success" @click="add('/batchAddWorker')">批量添加医生</div>
                   </div>
-                 <div v-if="showInfoNumber == 2">
+                 <div v-if="showInfoNumber == 1">
   	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
                  </div>
-                 <div v-if="showInfoNumber == 1">
+                 <div v-if="showInfoNumber == 2">
   	               	<div class="btn btn-success" @click="add('/addCaller')">添加叫号器</div>
                  </div>
                </div>
@@ -17,8 +17,8 @@
 	               <div class="nav-bar">
 	               	     <div class="station-name">{{stationName}}</div>
 	               	     <div class="station-name" @click="showInfo(0)">医生信息</div>
-	               	     <div class="station-name" @click="showInfo(2)">队列</div>
-	               	     <div class="station-name" @click="showInfo(1)">叫号器</div>
+	               	     <div class="station-name" @click="showInfo(1)">队列</div>
+	               	     <div class="station-name" @click="showInfo(2)">叫号器</div>
 	               </div>
 	               <div class="nav-info">
 	               	   <div class="workList" v-if="showInfoNumber == 0">
@@ -40,14 +40,14 @@
 	               	   <div class="callerList" v-if="showInfoNumber == 1">
 		               	   <table class="table">
 		               	        <tr>
-		               	        	<th>姓名</th>
-		               	        	<th>职务</th>
+		               	        	<th>队列名字</th>
+		               	        	<th>stationID</th>
 		               	        </tr>
 		               	   	    <tbody>
 		               	   	        <div class="noData" v-if="queueList.length == 0">没有队列</div>
-		               	   	        <tr v-for="worker in workerList">
-		               	   	        	<td>{{worker.name}}</td>
-		               	   	        	<td>{{worker.title}}</td>
+		               	   	        <tr v-for="queue in queueList">
+		               	   	        	<td>{{queue.name}}</td>
+		               	   	        	<td>{{queue.stationID}}</td>
 		               	   	        </tr>	
 		               	   	    	
 		               	   	    </tbody>
