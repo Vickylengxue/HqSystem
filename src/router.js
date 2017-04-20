@@ -14,6 +14,7 @@ import addWorker from 'components/addWorker/addWorker'
 import batchAddWorker from 'components/batchAddWorker/batchAddWorker'
 import addCaller from 'components/addCaller/addCaller'
 import addQueue from 'components/addQueue/addQueue'
+import editQueue from 'components/editQueue/editQueue'
 Vue.use(VueRouter)
 
 // 页面刷新时，重新赋值token
@@ -80,6 +81,14 @@ const routes = [{
             component: addQueue,
             meta: {
                 keepAlive: true
+            }
+        },
+        {
+            name: 'editQueue',
+            path: '/editQueue',
+            component: editQueue,
+            meta: {
+                keepAlive: false
             }
         },
         {

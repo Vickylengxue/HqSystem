@@ -42,12 +42,14 @@
 		               	        <tr>
 		               	        	<th>队列名字</th>
 		               	        	<th>stationID</th>
+		               	        	<th>操作</th>
 		               	        </tr>
 		               	   	    <tbody>
 		               	   	        <div class="noData" v-if="queueList.length == 0">没有队列</div>
 		               	   	        <tr v-for="queue in queueList">
 		               	   	        	<td>{{queue.name}}</td>
 		               	   	        	<td>{{queue.stationID}}</td>
+		               	   	        	<td @click="edit('/editQueue', queue)">编辑</td>
 		               	   	        </tr>	
 		               	   	    	
 		               	   	    </tbody>
@@ -155,6 +157,14 @@
 						stationID: this.stationID
 					}
 				})
+			},
+			edit(path, info) {
+                console.log('edit')
+                console.log(info)
+                this.$router.push({
+                	path: path,
+                	query: info
+                })
 			}
 		}
 	}
