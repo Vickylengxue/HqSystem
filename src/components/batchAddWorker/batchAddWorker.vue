@@ -2,7 +2,7 @@
 	<div class="batchAddWorker">
 	     <div class="container">
 	     	<div class="row settings">
-	     		<div class="btn btn-success" @click="batchAddWorker">保存</div>
+	     		<div class="btn btn-success" @click="batchAddWorker">导入</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
@@ -25,43 +25,43 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">密码</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.passwd" required name="passwd" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.passwd" required name="passwd" :class="[fieldClassName(formstate.form1.passwd),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">端口</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.port" required name="port" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.port" required name="port" :class="[fieldClassName(formstate.form1.port),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">字符集</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.charset" required name="charset" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.charset" required name="charset" :class="[fieldClassName(formstate.form1.charset),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBName" required name="DBName" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.DBName" required name="DBName" :class="[fieldClassName(formstate.form1.DBName),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库类型</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.DBType" required name="DBType" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.DBType" required name="DBType" :class="[fieldClassName(formstate.form1.DBType),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">数据库表名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.table" required name="table" :class="{'form-control':formControlObj.formControl}" />
+	     		      	<input v-model="form.table" required name="table" :class="[fieldClassName(formstate.form1.table),'form-control']" />
 	     		      </div>
 	     		    </validate>
 	     		    <button type="submit" class="center-block btn btn btn-primary">{{formControlObj.form1BtnVal}}</button>
-	     		  </vue-form>
-	     		  <h4>SQL信息</h4>
-	     		  <vue-form :state="formstate.form2"  class="form-horizontal" @submit.prevent="testSQL">
+	     		</vue-form>
+	     		<h4>SQL信息</h4>
+	     		<vue-form :state="formstate.form2"  class="form-horizontal" @submit.prevent="testSQL">
 	     		      <validate  class="form-group">
 	     		        <label  class="col-sm-2 control-label">字段别名(ID)</label>
 	     		        <div class="col-sm-10">
@@ -98,8 +98,30 @@
 	     		        	<input v-model="form.aliasHeadPic"  name="port" :class="{'form-control':formControlObj.formControl}" />
 	     		        </div>
 	     		      </validate>
+	     		      <div class="form-group">
+	     		      	<label for="" class="col-sm-2 control-label">生成SQL语句</label>
+	     		      	<div class="col-sm-10">
+	     		      		<textarea  :class="{'form-control':formControlObj.formControl}" v-model="form.sqlLang"></textarea>
+	     		      	</div>
+	     		      </div>
 	     		      <button type="submit" class="center-block btn btn btn-primary">{{formControlObj.form2BtnVal}}</button>
-	     		    </vue-form>
+	     		</vue-form>
+	     		<h4>账号信息</h4>
+	     		<form novalidate class="form-horizontal">
+	     		     <div class="form-group">
+	     		     	<label for="" class="col-sm-2 control-label">账号：</label>
+	     		     	<div class="col-sm-10">
+	     		     		<input type="radio" class="" checked> &nbsp; 同医生编号
+	     		     	</div>
+	     		     </div>
+	     		     <div class="form-group">
+	     		     	<label for="" class="col-sm-2 control-label">密码：</label>
+	     		     	<div class="col-sm-10">
+	     		     		<input type="radio" class="" checked> &nbsp; 123456(默认密码)
+	     		     	</div>
+	     		     </div>
+	     		</form>
+
 	     	</div>
 	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
 	     		<p slot='body'>{{modal.modalContent}}</p>
@@ -138,11 +160,13 @@
 					aliasTitle: 'title',
 					aliasDepartment: 'department',
 					aliasDescText: 'descText',
-					aliasHeadPic: ''
+					aliasHeadPic: '',
+					sqlLang: ''
 				},
 				formControlObj: {
 					form1BtnVal: '',
-					form2BtnVal: ''
+					form2BtnVal: '',
+					formControl: true
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
@@ -156,7 +180,7 @@
 				return this.$route.query.stationID;
 			},
 			workerUrl() {
-				return this.$store.state.serverUrl.worker
+				return this.$store.getters.postUrl('manager', 'worker')
 			}
 		},
 		components: {
@@ -251,10 +275,11 @@
 							this.modal.modalShow = true;
 							this.formControlObj.form2BtnVal = this.formBtnVal[0]
 						} else {
-							this.formstate.form2.linkTest = true;
-							this.formControlObj.form2BtnVal = this.formBtnVal[2];
 							this.modal.modalContent = '连接成功';
 							this.modal.modalShow = true;
+							this.form.sqlLang = res.sql;
+							this.formstate.form2.linkTest = true;
+							this.formControlObj.form2BtnVal = this.formBtnVal[2];
 						}
 					}, (res) => {
 						console.log(res)
@@ -263,32 +288,42 @@
 				}
 			},
 			batchAddWorker() {
-				if (this.formstate.$invalid) {
-					this.modal.modalShow = true;
-					this.modal.modalContent = '请填写完整数据';
-				} else {
-					this.form.user = this.form.name;
-					this.axios.post(this.serverUrl, {
-						action: 'add',
-						stationID: this.stationID,
-						id: this.form.id,
-						name: this.form.name,
-						title: this.form.title,
-						department: this.form.department,
-						descText: this.form.descText,
-						user: this.form.user,
-	                    password: this.form.password,
-	                    // headPic: this.form.headPic
-	                    headPic: 'www.baidu.com'
-					}).then((res) => {
-                       console.log(res)
-                       this.modal.modalShow = true;
-                       this.modal.modalContent = '保存成功';
-					}, (res) => {
-                        this.modal.modalShow = true;
-                        this.modal.modalContent = '保存失败';
-					})
+				console.log('batchAddWorker')
+				if (!this.formstate.form1.linkTest) {
+                   this.modal.modalContent = '请先测试数据库信息';
+                   this.modal.modalShow = true;
+                   return;
 				}
+				if (!this.formstate.form2.linkTest) {
+	               this.modal.modalContent = '请先测试SQL连接信息';
+	               this.modal.modalShow = true;
+	               return;
+				}
+				this.axios.post(this.workerUrl, {
+					action: 'import',
+					stationID: this.stationID,
+					DBType: this.form.DBType,
+					host: this.form.host,
+					port: this.form.port,
+					charset: this.form.charset,
+					user: this.form.user,
+					passwd: this.form.passwd,
+					DBName: this.form.DBName,
+					table: this.form.table,
+                    aliasName: this.form.aliasName,
+                    aliasID: this.form.aliasID,
+                    aliasTitle: this.form.aliasTitle,
+                    aliasDepartment: this.form.aliasDepartment,
+                    aliasDescText: this.form.aliasDescText,
+                    aliasHeadPic: this.form.aliasHeadPic
+				}).then((res) => {
+                   console.log(res)
+                   this.modal.modalShow = true;
+                   this.modal.modalContent = '保存成功';
+				}, (res) => {
+                    this.modal.modalShow = true;
+                    this.modal.modalContent = '保存失败';
+				})
 			},
 			cancel() {
 				// todo

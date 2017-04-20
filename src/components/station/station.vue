@@ -91,13 +91,13 @@
 				return this.$store.getters.postUrl('station')
 			},
 			workerUrl() {
-				return this.$store.getters.postUrl('worker')
+				return this.$store.getters.postUrl('manager', 'worker')
 			},
 			queueInfoUrl() {
-				return this.$store.getters.postUrl('queueInfo')
+				return this.$store.getters.postUrl('manager', 'queueInfo')
 			},
 			callerUrl() {
-				return this.$store.getters.postUrl('caller')
+				return this.$store.getters.postUrl('manager', 'caller')
 			},
 			stationID() {
 				return this.$route.query.id;
@@ -117,6 +117,7 @@
 		},
 		methods: {
 			_init() {
+				console.log(this.workerUrl, this.queueInfoUrl)
 				this.axios.post(this.workerUrl, {
 					action: 'getList',
 					stationID: this.stationID
