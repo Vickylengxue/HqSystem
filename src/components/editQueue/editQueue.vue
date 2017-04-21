@@ -4,6 +4,7 @@
 	     	<div class="row settings">
 	     		<div class="btn btn-success" @click="addQueue">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
+	     		<div class="btn btn-danger" @click="del">删除</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
@@ -80,9 +81,6 @@
 	     		    </div>
 	     		  </vue-form>
 	     	</div>
-	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
-	     		<p slot='body'>{{modal.modalContent}}</p>
-	     	</modal>
 	     </div>
 	</div>
 </template>
@@ -123,6 +121,9 @@
 			},
 			queueInfoUrl() {
 				return this.$store.getters.postUrl('manager', 'queueInfo')
+			},
+			queryParas() {
+				return this.$route.query
 			}
 		},
 		components: {
@@ -131,9 +132,10 @@
 		},
 		created() {
 			this._init()
+			console.log(this.queryParas)
 		},
 		mounted() {
-			console.log(this.$route.name, this.$route, this.$route.query)
+			console.log(this.$route)
 		},
 		methods: {
 			_init() {
@@ -190,7 +192,49 @@
 				// todo
 				// 切换回去 有缓存
 				this.$router.go(-1)
+			},
+			// 删除
+			del() {
+				// todo
+				// 弹出框优化
+				console.log('confirm')
+				var flag = confirm('确定删除？')
+				if (!flag) {
+					return;
+				}
+				this.axios.post(this.queueInfoUrl, {
+					action: 'delete',
+					stationID: this.stationID,
+                    id: this.queryParas.id
+				}).then((res) => {
+                   alert('删除成功')
+                   this.cancel()
+				}, (res) => {
+				})
 			}
+			// delCancel() {
+			// 	console.log('delCancel')
+			// 	this.modal.modalShow = false;
+			// },
+			// delConfirm() {
+			// 	this.modal.modalShow = false;
+			// 	this.axios.post(this.queueInfoUrl, {
+			// 		action: 'add',
+			// 		stationID: this.stationID,
+			// 		name: this.form.name,
+			// 		scene: this.form.sceneSupportRadio,
+			// 		descText: this.form.descText,
+			// 		// filter:
+			// 		workerLimit: this.form.workerListCheckbox
+			// 	}).then((res) => {
+   //                 console.log(res)
+   //                 this.modal.modalShow = true;
+   //                 this.modal.modalContent = '保存成功';
+			// 	}, (res) => {
+   //                  this.modal.modalShow = true;
+   //                  this.modal.modalContent = '保存失败';
+			// 	})
+			// }
 		}
 	}
 </script>

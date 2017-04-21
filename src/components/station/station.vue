@@ -146,7 +146,7 @@
 					console.log('failed')
 				})
 			},
-			// 显示右侧内容 0 医生信息  1 叫号器信息  2  队列信息
+			// 显示右侧内容
 			showInfo(num) {
 				this.showInfoNumber = num;
 			},

@@ -48,18 +48,18 @@
 	     		    </validate>
          		    <h4>策略配置</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="(sceneSupport, index) in sceneSupportList">
+	         		    <div  class="form-group" v-for="(sceneSupport, index) in form.sceneSupportList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="sceneSupportRadio"  :value="sceneSupport" >
+		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="form.sceneSupportRadio"  :value="sceneSupport" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{sceneSupport}}</div>
 	         		    </div>
          		    </div>
          		    <h4>所属医生</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="worker in workerList">
+	         		    <div  class="form-group" v-for="worker in form.workerList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="workerListCheckbox"  :value="worker.id" >
+		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="form.workerListCheckbox"  :value="worker.id" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{worker.name}}</div>
 
@@ -80,7 +80,7 @@
 	     		    </div>
 	     		  </vue-form>
 	     	</div>
-	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
+	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false" >
 	     		<p slot='body'>{{modal.modalContent}}</p>
 	     	</modal>
 	     </div>
@@ -101,17 +101,17 @@
 				form: {
 					name: '',
 					scene: '',
-					descText: ''
+					descText: '',
+					workerList: '',
+					workerListCheckbox: [],
+					sceneSupportList: '',
+					sceneSupportRadio: ''
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				},
-				workerList: '',
-				workerListCheckbox: [],
-				sceneSupportList: '',
-				sceneSupportRadio: ''
+				}
 			}
 		},
 		computed: {
@@ -133,7 +133,7 @@
 			this._init()
 		},
 		mounted() {
-			console.log(this.$route.name, this.$route, this.$route.query)
+			console.log(this.$route.name)
 		},
 		methods: {
 			_init() {
@@ -150,10 +150,10 @@
 						action: 'add',
 						stationID: this.stationID,
 						name: this.form.name,
-						scene: this.sceneSupportRadio,
+						scene: this.form.sceneSupportRadio,
 						descText: this.form.descText,
 						// filter:
-						workerLimit: this.workerListCheckbox
+						workerLimit: this.form.workerListCheckbox
 					}).then((res) => {
                        console.log(res)
                        this.modal.modalShow = true;
@@ -169,7 +169,7 @@
 					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.workerList = res.workerList;
+					this.form.workerList = res.workerList;
 				}, (res) => {
 					console.log('failed')
 				})
@@ -180,8 +180,7 @@
 					action: 'getSceneSupportList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.sceneSupportList = res.list;
-					console.log(this.sceneSupportList)
+					this.form.sceneSupportList = res.list;
 				}, (res) => {
 					console.log('failed')
 				})
