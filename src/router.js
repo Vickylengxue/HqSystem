@@ -15,6 +15,7 @@ import batchAddWorker from 'components/batchAddWorker/batchAddWorker'
 import addCaller from 'components/addCaller/addCaller'
 import addQueue from 'components/addQueue/addQueue'
 import editQueue from 'components/editQueue/editQueue'
+import editCaller from 'components/editCaller/editCaller'
 Vue.use(VueRouter)
 
 // 页面刷新时，重新赋值token
@@ -95,6 +96,14 @@ const routes = [{
             name: 'addCaller',
             path: '/addCaller',
             component: addCaller,
+            meta: {
+                keepAlive: false
+            }
+        },
+        {
+            name: 'editCaller',
+            path: '/editCaller',
+            component: editCaller,
             meta: {
                 keepAlive: false
             }

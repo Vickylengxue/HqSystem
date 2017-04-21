@@ -190,32 +190,31 @@
 </script>
 
 <style scoped>
-h2 {
-	padding-bottom:24px;
-	border-bottom: 1px solid #f1f1f1;
-}
-input {
-	border:0px;
-	box-shadow: 0 0 ;
-	border-bottom: 1px solid #f1f1f1;
-}
-.settings {
-	text-align: center;
-	height:140px;
-	position: static;
-	line-height: 140px
-}
- .settings > div {
- 	position: absolute;
- 	color:#fff;
- 	display: inline-block;
- 	margin-left:20px;
- 	margin-right:20px;
- 	position: relative;
- 	height:58px;
- 	width:112px;
-    line-height: 58px;
-    padding:0;
- }
-
+	h2 {
+		padding-bottom:24px;
+		border-bottom: 1px solid #f1f1f1;
+	}
+	input {
+		border:0px;
+		box-shadow: 0 0 ;
+		border-bottom: 1px solid #f1f1f1;
+	}
+	.settings {
+		text-align: center;
+		height:140px;
+		position: static;
+		line-height: 140px
+	}
+	.settings > div {
+		position: absolute;
+		color:#fff;
+		display: inline-block;
+		margin-left:20px;
+		margin-right:20px;
+		position: relative;
+		height:58px;
+		width:112px;
+	    line-height: 58px;
+	    padding:0;
+	}
 </style>

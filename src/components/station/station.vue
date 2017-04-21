@@ -58,13 +58,16 @@
 	               	   <div class="queueList" v-if="showInfoNumber == 2">
 		               	   <table class="table">
 		               	        <tr>
-		               	        	<th>姓名</th>
-		               	        	<th>诊室</th>
+		               	        	<th>叫号器name</th>
+		               	        	<th>叫号器pos</th>
+		               	        	<th>操作</th>
 		               	        </tr>
 		               	   	    <tbody>
 		               	   	         <div class="noData" v-if="callerList.length == 0">没有叫号器</div>
 		               	   	        <tr v-for="caller in callerList">
-		               	   	        	<td>{{caller}}</td>
+		               	   	        	<td>{{caller.name}}</td>
+		               	   	        	<td>{{caller.pos}}</td>
+		               	   	        	<td @click="edit('/editCaller', caller)">编辑</td>
 		               	   	        </tr>	
 		               	   	    </tbody>
 		               	   </table>
