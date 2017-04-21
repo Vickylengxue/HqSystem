@@ -153,7 +153,7 @@
 					this.form.user = this.form.name;
 					this.axios.post(this.queueInfoUrl, {
 						action: 'add',
-						stationID: this.stationID,
+						stationID: Number(this.stationID),
 						name: this.form.name,
 						scene: this.form.sceneSupportRadio,
 						descText: this.form.descText,

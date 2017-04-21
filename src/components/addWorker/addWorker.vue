@@ -2,7 +2,7 @@
 	<div class="addWorker">
 	     <div class="container">
 	     	<div class="row settings">
-	     		<div class="btn btn-success" @click="addStation">保存</div>
+	     		<div class="btn btn-success" @click="addWorker">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
@@ -44,6 +44,7 @@
 	     		      <label  class="col-sm-2 control-label">头像</label>
 	     		      <div class="col-sm-10">
 	     		      <!-- todo 上传 功能 -->
+	     		      	<input type="file" id="uploadImg">
 	     		      	上传
 	     		      </div>
 	     		    </validate>
@@ -78,6 +79,7 @@
 		name: 'addWorker',
 		data() {
 			return {
+				name: 'file',
 				formstate: {
 				},
 				form: {
@@ -124,13 +126,12 @@
 		methods: {
 			_init() {
 			},
-			addStation() {
+			addWorker() {
 				if (this.formstate.$invalid) {
 					this.modal.modalShow = true;
 					this.modal.modalContent = '请填写完整数据';
 				} else {
 					this.form.user = this.form.name;
-					console.log(this.stationID)
 					this.axios.post(this.serverUrl, {
 						action: 'add',
 						stationID: this.stationID,
@@ -153,11 +154,31 @@
 					})
 				}
 			},
-			cancel() {
-				// todo
-				// 切换回去 有缓存
-				this.$router.go(-1)
-			},
+			//todo 上传做了一半
+			// upload() {
+   //              console.log('upload')
+   //              let uploadImg = document.getElementById('uploadImg')
+   //              let formData = new FormData();
+			// 	formData.append('file', uploadImg.files[0])
+			// 	// formData.append('type', 'normal')
+			// 	let request = new XMLHttpRequest();
+			// 	request.open('POST', 'http://192.168.17.187/hqueue/manager/upload');
+			// 	request.onreadystatechange = function(response) {
+   //                console.log('request', request)
+   //                console.log('response', response)
+   //                // if (request.readyState === 4 && request.status === 200 && request.responseText !== '') {
+   //                //       console.log(request.responseText);
+   //                //     if (JSON.parse(request.responseText).result !== 0) {
+   //                //       console.log('failed')
+   //                //     } else {
+   //                //       console.log('success')
+   //                //     }
+   //                // } else if (request.status !== 200 && request.responseText) {
+   //                //     console.log('2 failed')
+   //                // }
+			// 	};
+			// 	request.send(formData);
+			// },
 			verifyID() {
 				if (!this.form.verifyIDFlag) {
 					return;
@@ -177,6 +198,11 @@
 					}
 				}, (res) => {
 				})
+			},
+			cancel() {
+				// todo
+				// 切换回去 有缓存
+				this.$router.go(-1)
 			}
 		}
 	}
