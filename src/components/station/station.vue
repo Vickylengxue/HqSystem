@@ -59,15 +59,13 @@
 		               	   <table class="table">
 		               	        <tr>
 		               	        	<th>姓名</th>
-		               	        	<th>职务</th>
+		               	        	<th>诊室</th>
 		               	        </tr>
 		               	   	    <tbody>
-		               	   	         <div class="noData" v-if="queueList.length == 0">没有队列</div>
-		               	   	        <tr v-for="worker in workerList">
-		               	   	        	<td>{{worker.name}}</td>
-		               	   	        	<td>{{worker.title}}</td>
+		               	   	         <div class="noData" v-if="callerList.length == 0">没有叫号器</div>
+		               	   	        <tr v-for="caller in callerList">
+		               	   	        	<td>{{caller}}</td>
 		               	   	        </tr>	
-		               	   	    	
 		               	   	    </tbody>
 		               	   </table>
 	               	   </div>
@@ -119,7 +117,11 @@
 		},
 		methods: {
 			_init() {
-				console.log(this.workerUrl, this.queueInfoUrl)
+				this.getWorkerList()
+				this.getQueueList()
+				this.getCallerList()
+			},
+			getWorkerList() {
 				this.axios.post(this.workerUrl, {
 					action: 'getList',
 					stationID: this.stationID
@@ -128,6 +130,8 @@
 				}, (res) => {
 					console.log('failed')
 				})
+			},
+			getQueueList() {
 				this.axios.post(this.queueInfoUrl, {
 					action: 'getList',
 					stationID: this.stationID
@@ -137,6 +141,8 @@
 				}, (res) => {
 					console.log('failed ')
 				})
+			},
+			getCallerList() {
 				this.axios.post(this.callerUrl, {
 					action: 'getList',
 					stationID: this.stationID

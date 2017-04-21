@@ -80,7 +80,7 @@ const routes = [{
             path: '/addQueue',
             component: addQueue,
             meta: {
-                keepAlive: true
+                keepAlive: false
             }
         },
         {
@@ -96,7 +96,7 @@ const routes = [{
             path: '/addCaller',
             component: addCaller,
             meta: {
-                keepAlive: true
+                keepAlive: false
             }
         }
     ]

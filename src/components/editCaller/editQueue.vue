@@ -1,13 +1,14 @@
 <template lang="html">
-	<div class="addQueue">
+	<div class="editQueue">
 	     <div class="container">
 	     	<div class="row settings">
 	     		<div class="btn btn-success" @click="addQueue">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
+	     		<div class="btn btn-danger" @click="del">删除</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
-	     	    <h2>新建队列</h2>
+	     	    <h2>编辑队列</h2>
 	     		<h4>基础信息</h4>
 	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
@@ -40,28 +41,26 @@
 	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
 	     		      </div>
 	     		    </validate>
-	     		    <div  class="form-group">
-	     		      <label  class="col-sm-2 control-label">过滤条件</label>
+	     		    <validate  class="form-group">
+	     		      <label  class="col-sm-2 control-label">头像</label>
 	     		      <div class="col-sm-10">
-	     		      	<select v-model="form.filter">
-	     		      	  <option v-for="sourceQueue in form.sourceQueueList">{{sourceQueue}}</option>
-	     		      	</select>
+	     		      	上传
 	     		      </div>
-	     		    </div>
+	     		    </validate>
          		    <h4>策略配置</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="(sceneSupport, index) in form.sceneSupportList">
+	         		    <div  class="form-group" v-for="(sceneSupport, index) in sceneSupportList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="form.sceneSupportRadio"  :value="sceneSupport" >
+		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="sceneSupportRadio"  :value="sceneSupport" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{sceneSupport}}</div>
 	         		    </div>
          		    </div>
          		    <h4>所属医生</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="worker in form.workerList">
+	         		    <div  class="form-group" v-for="worker in workerList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="form.workerListCheckbox"  :value="worker.id" >
+		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="workerListCheckbox"  :value="worker.id" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{worker.name}}</div>
 
@@ -82,9 +81,6 @@
 	     		    </div>
 	     		  </vue-form>
 	     	</div>
-	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false" >
-	     		<p slot='body'>{{modal.modalContent}}</p>
-	     	</modal>
 	     </div>
 	</div>
 </template>
@@ -95,7 +91,7 @@
     import modal from '../../common/modal/modal'
     Vue.use(VueForm)
 	export default {
-		name: 'addQueue',
+		name: 'editQueue',
 		data() {
 			return {
 				formstate: {
@@ -103,19 +99,17 @@
 				form: {
 					name: '',
 					scene: '',
-					descText: '',
-					workerList: '',
-					workerListCheckbox: [],
-					sceneSupportList: '',
-					sceneSupportRadio: '',
-					sourceQueueList: '',
-					filter: ''
+					descText: ''
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				}
+				},
+				workerList: '',
+				workerListCheckbox: [],
+				sceneSupportList: '',
+				sceneSupportRadio: ''
 			}
 		},
 		computed: {
@@ -127,6 +121,9 @@
 			},
 			queueInfoUrl() {
 				return this.$store.getters.postUrl('manager', 'queueInfo')
+			},
+			queryParas() {
+				return this.$route.query
 			}
 		},
 		components: {
@@ -135,15 +132,15 @@
 		},
 		created() {
 			this._init()
+			console.log(this.queryParas)
 		},
 		mounted() {
-			console.log(this.$route.name)
+			console.log(this.$route)
 		},
 		methods: {
 			_init() {
 				this.getWorkerList()
 				this.getSceneSupportList()
-				this.getSourceQueueList()
 			},
 			addQueue() {
 				if (this.formstate.$invalid) {
@@ -155,10 +152,10 @@
 						action: 'add',
 						stationID: this.stationID,
 						name: this.form.name,
-						scene: this.form.sceneSupportRadio,
+						scene: this.sceneSupportRadio,
 						descText: this.form.descText,
-						filter: 'queue=' + this.form.filter,
-						workerLimit: this.form.workerListCheckbox
+						// filter:
+						workerLimit: this.workerListCheckbox
 					}).then((res) => {
                        console.log(res)
                        this.modal.modalShow = true;
@@ -174,7 +171,7 @@
 					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.form.workerList = res.workerList;
+					this.workerList = res.workerList;
 				}, (res) => {
 					console.log('failed')
 				})
@@ -185,27 +182,59 @@
 					action: 'getSceneSupportList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.form.sceneSupportList = res.list;
+					this.sceneSupportList = res.list;
+					console.log(this.sceneSupportList)
 				}, (res) => {
 					console.log('failed')
-				})
-			},
-			getSourceQueueList() {
-				this.axios.post(this.queueInfoUrl, {
-					action: 'getSourceQueueList',
-					stationID: this.stationID
-				}).then((res) => {
-					console.log(res)
-					this.form.sourceQueueList = res.list;
-				}, (res) => {
-					console.log('failed ')
 				})
 			},
 			cancel() {
 				// todo
 				// 切换回去 有缓存
 				this.$router.go(-1)
+			},
+			// 删除
+			del() {
+				// todo
+				// 弹出框优化
+				console.log('confirm')
+				var flag = confirm('确定删除？')
+				if (!flag) {
+					return;
+				}
+				this.axios.post(this.queueInfoUrl, {
+					action: 'delete',
+					stationID: this.stationID,
+                    id: this.queryParas.id
+				}).then((res) => {
+                   alert('删除成功')
+                   this.cancel()
+				}, (res) => {
+				})
 			}
+			// delCancel() {
+			// 	console.log('delCancel')
+			// 	this.modal.modalShow = false;
+			// },
+			// delConfirm() {
+			// 	this.modal.modalShow = false;
+			// 	this.axios.post(this.queueInfoUrl, {
+			// 		action: 'add',
+			// 		stationID: this.stationID,
+			// 		name: this.form.name,
+			// 		scene: this.form.sceneSupportRadio,
+			// 		descText: this.form.descText,
+			// 		// filter:
+			// 		workerLimit: this.form.workerListCheckbox
+			// 	}).then((res) => {
+   //                 console.log(res)
+   //                 this.modal.modalShow = true;
+   //                 this.modal.modalContent = '保存成功';
+			// 	}, (res) => {
+   //                  this.modal.modalShow = true;
+   //                  this.modal.modalContent = '保存失败';
+			// 	})
+			// }
 		}
 	}
 </script>
