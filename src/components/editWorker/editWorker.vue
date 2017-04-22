@@ -1,20 +1,20 @@
 <template lang="html">
-	<div class="editQueue">
+	<div class="editWorker">
 	     <div class="container">
 	     	<div class="row settings">
-	     		<div class="btn btn-success" @click="addQueue">保存</div>
+	     		<div class="btn btn-success" @click="editWorker">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
 	     		<div class="btn btn-danger" @click="del">删除</div>
 	     	</div>
 	     	<middleLine height='20'></middleLine>
 	     	<div class="row baseinfo">
-	     	    <h2>编辑队列</h2>
-	     		<h4>基础信息</h4>
+     		    <h2>编辑医生信息</h2>
+     			<h4>基础信息</h4>
 	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
-	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.id" required name="host" class="form-control" />
+	     		      <div class="col-sm-10 clearfix">
+	     		      	<input v-model="form.id" required name="host" class="form-control" v-on:blur="verifyID"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -44,29 +44,12 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">头像</label>
 	     		      <div class="col-sm-10">
+	     		      <!-- todo 上传 功能 -->
+	     		      	<input type="file" id="uploadImg">
 	     		      	上传
 	     		      </div>
 	     		    </validate>
-         		    <h4>策略配置</h4>
-         		    <div class="form-group">
-	         		    <div  class="form-group" v-for="(sceneSupport, index) in sceneSupportList">
-		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="sceneSupportRadio"  :value="sceneSupport" >
-		         		    </div>
-	         		        <div  class="col-sm-10 ">{{sceneSupport}}</div>
-	         		    </div>
-         		    </div>
-         		    <h4>所属医生</h4>
-         		    <div class="form-group">
-	         		    <div  class="form-group" v-for="worker in workerList">
-		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="workerListCheckbox"  :value="worker.id" >
-		         		    </div>
-	         		        <div  class="col-sm-10 ">{{worker.name}}</div>
-
-	         		    </div>
-         		    </div>
-	     		    <h4>账号信息</h4>
+	     		    <h2>账号信息</h2>
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">账号</label>
 	     		    	<div class="col-sm-10">
@@ -81,6 +64,9 @@
 	     		    </div>
 	     		  </vue-form>
 	     	</div>
+	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false">
+	     		<p slot='body'>{{modal.modalContent}}</p>
+	     	</modal>
 	     </div>
 	</div>
 </template>
@@ -91,36 +77,36 @@
     import modal from '../../common/modal/modal'
     Vue.use(VueForm)
 	export default {
-		name: 'editQueue',
+		name: 'editWorker',
 		data() {
 			return {
+				name: 'file',
 				formstate: {
 				},
 				form: {
+					id: '',
 					name: '',
-					scene: '',
-					descText: ''
+					title: '',
+					department: '',
+					descText: '',
+					user: '',
+                    password: '123456',
+                    headPic: '',
+                    verifyIDFlag: false
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				},
-				workerList: '',
-				workerListCheckbox: [],
-				sceneSupportList: '',
-				sceneSupportRadio: ''
+				}
 			}
 		},
 		computed: {
 			stationID() {
 				return this.$route.query.stationID;
 			},
-			workerUrl() {
+			serverUrl() {
 				return this.$store.getters.postUrl('manager', 'worker')
-			},
-			queueInfoUrl() {
-				return this.$store.getters.postUrl('manager', 'queueInfo')
 			},
 			queryParas() {
 				return this.$route.query
@@ -132,30 +118,36 @@
 		},
 		created() {
 			this._init()
-			console.log(this.queryParas)
 		},
 		mounted() {
-			console.log(this.$route)
+			console.log(this.$route.name, this.$route, this.$route.query)
+		},
+		watch: {
+			'form.id': function(val, oldval) {
+                this.form.verifyIDFlag = true;
+			}
 		},
 		methods: {
 			_init() {
-				this.getWorkerList()
-				this.getSceneSupportList()
 			},
-			addQueue() {
+			editWorker() {
 				if (this.formstate.$invalid) {
 					this.modal.modalShow = true;
 					this.modal.modalContent = '请填写完整数据';
 				} else {
 					this.form.user = this.form.name;
-					this.axios.post(this.queueInfoUrl, {
+					this.axios.post(this.serverUrl, {
 						action: 'add',
 						stationID: this.stationID,
+						id: this.form.id,
 						name: this.form.name,
-						scene: this.sceneSupportRadio,
+						title: this.form.title,
+						department: this.form.department,
 						descText: this.form.descText,
-						// filter:
-						workerLimit: this.workerListCheckbox
+						user: this.form.user,
+	                    password: this.form.password,
+	                    // headPic: this.form.headPic
+	                    headPic: 'www.baidu.com'
 					}).then((res) => {
                        console.log(res)
                        this.modal.modalShow = true;
@@ -166,75 +158,70 @@
 					})
 				}
 			},
-			getWorkerList() {
-				this.axios.post(this.workerUrl, {
-					action: 'getList',
-					stationID: this.stationID
+			// todo 上传做了一半
+			// upload() {
+   //              console.log('upload')
+   //              let uploadImg = document.getElementById('uploadImg')
+   //              let formData = new FormData();
+			// 	formData.append('file', uploadImg.files[0])
+			// 	// formData.append('type', 'normal')
+			// 	let request = new XMLHttpRequest();
+			// 	request.open('POST', 'http://192.168.17.187/hqueue/manager/upload');
+			// 	request.onreadystatechange = function(response) {
+   //                console.log('request', request)
+   //                console.log('response', response)
+   //                // if (request.readyState === 4 && request.status === 200 && request.responseText !== '') {
+   //                //       console.log(request.responseText);
+   //                //     if (JSON.parse(request.responseText).result !== 0) {
+   //                //       console.log('failed')
+   //                //     } else {
+   //                //       console.log('success')
+   //                //     }
+   //                // } else if (request.status !== 200 && request.responseText) {
+   //                //     console.log('2 failed')
+   //                // }
+			// 	};
+			// 	request.send(formData);
+			// },
+			verifyID() {
+				if (!this.form.verifyIDFlag) {
+					return;
+				}
+				this.axios.post(this.serverUrl, {
+					action: 'checkID',
+					stationID: this.stationID,
+					id: this.form.id
 				}).then((res) => {
-					this.workerList = res.workerList;
+					console.log(res)
+					if (res.conflict === 0) {
+                        this.form.verifyIDFlag = false;
+					} else if (res.conflict === 1) {
+						this.form.verifyIDFlag = false;
+	                    this.modal.modalShow = true;
+	                    this.modal.modalContent = '该账号已被占用';
+					}
 				}, (res) => {
-					console.log('failed')
 				})
 			},
-			// 策略列表
-			getSceneSupportList() {
-				this.axios.post(this.queueInfoUrl, {
-					action: 'getSceneSupportList',
-					stationID: this.stationID
-				}).then((res) => {
-					this.sceneSupportList = res.list;
-					console.log(this.sceneSupportList)
-				}, (res) => {
-					console.log('failed')
-				})
-			},
-			cancel() {
-				// todo
-				// 切换回去 有缓存
-				this.$router.go(-1)
-			},
-			// 删除
 			del() {
-				// todo
-				// 弹出框优化
-				console.log('confirm')
+				console.log('del')
 				var flag = confirm('确定删除？')
 				if (!flag) {
 					return;
 				}
-				this.axios.post(this.queueInfoUrl, {
-					action: 'delete',
+				this.axios.post(this.serverUrl, {
+					action: 'del',
 					stationID: this.stationID,
                     id: this.queryParas.id
 				}).then((res) => {
                    alert('删除成功')
-                   this.cancel()
 				}, (res) => {
+					alert('删除失败')
 				})
+			},
+			cancel() {
+				this.$router.go(-1)
 			}
-			// delCancel() {
-			// 	console.log('delCancel')
-			// 	this.modal.modalShow = false;
-			// },
-			// delConfirm() {
-			// 	this.modal.modalShow = false;
-			// 	this.axios.post(this.queueInfoUrl, {
-			// 		action: 'add',
-			// 		stationID: this.stationID,
-			// 		name: this.form.name,
-			// 		scene: this.form.sceneSupportRadio,
-			// 		descText: this.form.descText,
-			// 		// filter:
-			// 		workerLimit: this.form.workerListCheckbox
-			// 	}).then((res) => {
-   //                 console.log(res)
-   //                 this.modal.modalShow = true;
-   //                 this.modal.modalContent = '保存成功';
-			// 	}, (res) => {
-   //                  this.modal.modalShow = true;
-   //                  this.modal.modalContent = '保存失败';
-			// 	})
-			// }
 		}
 	}
 </script>
