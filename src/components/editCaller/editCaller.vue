@@ -4,12 +4,13 @@
 		     	<div class="row settings">
 		     		<div class="btn btn-success" @click="editCaller">保存</div>
 		     		<div class="btn btn-warning" @click="cancel">取消</div>
+		     		<div class="btn btn-danger" @click="del">删除</div>
 		     	</div>
 		     	<middleLine height='20'></middleLine>
 		     	<div class="row baseinfo">
 		     	    <h2>编辑叫号器</h2>
 		     		<h4>基础信息</h4>
-		     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
+		     		<vue-form :state="formstate"  class="form-horizontal" >
 		     		    <validate  class="form-group">
 		     		      <label  class="col-sm-2 control-label">名称</label>
 		     		      <div class="col-sm-10">
@@ -36,23 +37,18 @@
 		     		      	<input v-model="form.pos" required name="user" class="form-control"/>
 		     		      </div>
 		     		    </validate>
-		     		    <validate  class="form-group">
-		     		      <label  class="col-sm-2 control-label">简介</label>
-		     		      <div class="col-sm-10">
-		     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
-		     		      </div>
-		     		    </validate>
 	         		    <h4>可登录医生</h4>
 	         		    <div class="form-group">
 		         		    <div  class="col-sm-11 col-sm-offset-1" >
 			         		    <div class="row">
 			         		        <div class="" v-for="worker in form.workerList">
 	        		         		    <div class="col-sm-1 ">
-	        		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="form.workerListCheckbox"  :value="worker.id" >
+	        		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="form.workerLimit"  :value="worker.id" >
 	        		         		    </div>
 	        	         		        <div  class="col-sm-3 ">{{worker.name}}</div>
 			         		        </div>
 			         		    </div>
+			         		    {{form.workerLimit}}
 		         		    </div>
 	         		    </div>
 	         		    <h4>优先队列</h4>
@@ -91,17 +87,19 @@
 				form: {
 					name: '',
 					scene: '',
-					descText: ''
+					descText: '',
+					ip: '',
+					workerList: '',
+					pos: '',
+					workerListCheckbox: [],
+					queueList: '',
+					priorQueue: ''
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				},
-				workerList: '',
-				workerListCheckbox: [],
-				sceneSupportList: '',
-				sceneSupportRadio: ''
+				}
 			}
 		},
 		computed: {
@@ -135,8 +133,18 @@
 		},
 		methods: {
 			_init() {
+				this.setParas()
 				this.getWorkerList()
-				this.getSceneSupportList()
+				this.getQueueList()
+			},
+			setParas() {
+				this.form.name = this.queryParas.name
+				this.form.type = this.queryParas.type
+				this.form.ip = this.queryParas.ip
+				this.form.pos = this.queryParas.pos
+				this.form.descText = this.queryParas.descText
+				this.form.priorQueue = this.queryParas.priorQueue
+				this.form.workerLimit = this.queryParas.workerLimit
 			},
 			editCaller() {
 				if (this.formstate.$invalid) {
@@ -167,21 +175,20 @@
 					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.workerList = res.workerList;
+					this.form.workerList = res.workerList;
 				}, (res) => {
 					console.log('failed')
 				})
 			},
-			// 策略列表
-			getSceneSupportList() {
+			getQueueList() {
 				this.axios.post(this.queueInfoUrl, {
-					action: 'getSceneSupportList',
+					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.sceneSupportList = res.list;
-					console.log(this.sceneSupportList)
+					console.log(res)
+					this.form.queueList = res.list;
 				}, (res) => {
-					console.log('failed')
+					console.log('failed ')
 				})
 			},
 			cancel() {

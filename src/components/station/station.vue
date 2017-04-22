@@ -50,7 +50,7 @@
 		               	   	        <tr v-for="queue in queueList">
 		               	   	        	<td>{{queue.name}}</td>
 		               	   	        	<td>{{queue.id}}</td>
-		               	   	        	<td @click="edit('/editQueue', queue)">{{queue}}编辑</td>
+		               	   	        	<td @click="edit('/editQueue', queue)">编辑</td>
 		               	   	        </tr>	
 		               	   	    	
 		               	   	    </tbody>

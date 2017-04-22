@@ -27,19 +27,13 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">IP</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.ip" required name="user" class="form-control"/>
+	     		      	<input v-model="form.ip" required name="ip" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">pos</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.pos" required name="user" class="form-control"/>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">简介</label>
-	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
+	     		      	<input v-model="form.pos" required name="pos" class="form-control"/>
 	     		      </div>
 	     		    </validate>
          		    <h4>可登录医生</h4>
@@ -151,6 +145,7 @@
 						stationID: this.stationID,
 						name: this.form.name,
 						type: this.form.type,
+						ip: this.form.ip,
 						pos: this.form.pos,
 						workerLimit: this.form.workerListCheckbox,
 						priorQueue: this.form.priorQueue
