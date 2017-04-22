@@ -14,31 +14,31 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
 	     		      <div class="col-sm-10 clearfix">
-	     		      	<input v-model="form.id" required name="host" class="form-control" v-on:blur="verifyID"/>
+	     		      	<input v-model="form.id" required name="id" class="form-control" @blur="verifyID"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">姓名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.name" required name="user" class="form-control"/>
+	     		      	<input v-model="form.name" required name="name" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">职称</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.title" required name="user" class="form-control"/>
+	     		      	<input v-model="form.title" required name="title" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">科室</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.department" required name="user" class="form-control"/>
+	     		      	<input v-model="form.department" required name="department" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">简介</label>
 	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
+	     		      	<textarea v-model="form.descText" required name="descText" class="form-control"></textarea>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -83,17 +83,7 @@
 				name: 'file',
 				formstate: {
 				},
-				form: {
-					id: '',
-					name: '',
-					title: '',
-					department: '',
-					descText: '',
-					user: '',
-                    password: '123456',
-                    headPic: '',
-                    verifyIDFlag: false
-				},
+				form: {},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
@@ -103,7 +93,7 @@
 		},
 		computed: {
 			stationID() {
-				return this.$route.query.stationID;
+				return Number(this.$route.query.stationID);
 			},
 			serverUrl() {
 				return this.$store.getters.postUrl('manager', 'worker')
@@ -120,7 +110,7 @@
 			this._init()
 		},
 		mounted() {
-			console.log(this.$route.name, this.$route, this.$route.query)
+			console.log(this.$route, this.$route.query)
 		},
 		watch: {
 			'form.id': function(val, oldval) {
@@ -129,15 +119,19 @@
 		},
 		methods: {
 			_init() {
+				this.form = this.queryParas
 			},
 			editWorker() {
+				console.log(this.formstate.$invalid, this.form)
 				if (this.formstate.$invalid) {
 					this.modal.modalShow = true;
 					this.modal.modalContent = '请填写完整数据';
+					return;
 				} else {
+					console.log('valid')
 					this.form.user = this.form.name;
 					this.axios.post(this.serverUrl, {
-						action: 'add',
+						action: 'edit',
 						stationID: this.stationID,
 						id: this.form.id,
 						name: this.form.name,
@@ -146,6 +140,7 @@
 						descText: this.form.descText,
 						user: this.form.user,
 	                    password: this.form.password,
+	                    // todo 假数据
 	                    // headPic: this.form.headPic
 	                    headPic: 'www.baidu.com'
 					}).then((res) => {
@@ -215,6 +210,7 @@
                     id: this.queryParas.id
 				}).then((res) => {
                    alert('删除成功')
+                   this.cancel()
 				}, (res) => {
 					alert('删除失败')
 				})
