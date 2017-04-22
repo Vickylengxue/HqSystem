@@ -9,35 +9,17 @@
 	     	<div class="row baseinfo">
 	     	    <h2>新建队列</h2>
 	     		<h4>基础信息</h4>
-	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
+	     		<vue-form :state="formstate"  class="form-horizontal">
 	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">账号</label>
+	     		      <label  class="col-sm-2 control-label">队列名字</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.id" required name="host" class="form-control" />
+	     		      	<input v-model="form.name" required name="name" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">姓名</label>
+	     		      <label  class="col-sm-2 control-label">队列描述</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.name" required name="user" class="form-control"/>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">职称</label>
-	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.title" required name="user" class="form-control"/>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">科室</label>
-	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.department" required name="user" class="form-control"/>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">简介</label>
-	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
+	     		      	<input v-model="form.descText" required name="descText" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <div  class="form-group">
@@ -67,7 +49,7 @@
 
 	         		    </div>
          		    </div>
-	     		    <h4>账号信息</h4>
+<!-- 	     		    <h4>账号信息</h4>
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">账号</label>
 	     		    	<div class="col-sm-10">
@@ -77,9 +59,9 @@
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">密码</label>
 	     		    	<div class="col-sm-10">
-	     		    		<input v-model="form.password"   required name="user" class="form-control" />
+	     		    		<input v-model="form.password"   required name="password" class="form-control" />
 	     		    	</div>
-	     		    </div>
+	     		    </div> -->
 	     		  </vue-form>
 	     	</div>
 	     	<modal v-if="modal.modalShow" @close="modal.modalShow = false" >
@@ -109,7 +91,8 @@
 					sceneSupportList: '',
 					sceneSupportRadio: '',
 					sourceQueueList: '',
-					filter: ''
+					filter: '',
+					password: '123456'
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
@@ -157,7 +140,8 @@
 						name: this.form.name,
 						scene: this.form.sceneSupportRadio,
 						descText: this.form.descText,
-						filter: 'queue=' + this.form.filter,
+						// filter: 'queue=\'' + this.form.filter + '\'',
+						filter: `queue='${this.form.filter}'`,
 						workerLimit: this.form.workerListCheckbox
 					}).then((res) => {
                        console.log(res)

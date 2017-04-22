@@ -2,7 +2,7 @@
 	<div class="editQueue">
 	     <div class="container">
 	     	<div class="row settings">
-	     		<div class="btn btn-success" @click="addQueue">保存</div>
+	     		<div class="btn btn-success" @click="editQueue">保存</div>
 	     		<div class="btn btn-warning" @click="cancel">取消</div>
 	     		<div class="btn btn-danger" @click="del">删除</div>
 	     	</div>
@@ -10,63 +10,47 @@
 	     	<div class="row baseinfo">
 	     	    <h2>编辑队列</h2>
 	     		<h4>基础信息</h4>
-	     		<vue-form :state="formstate"  class="form-horizontal" @submit.prevent="testDB">
+	     		<vue-form :state="formstate"  class="form-horizontal">
 	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">账号</label>
+	     		      <label  class="col-sm-2 control-label">队列名字</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.id" required name="host" class="form-control" />
+	     		      	<input v-model="form.name" required name="name" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">姓名</label>
+	     		      <label  class="col-sm-2 control-label">队列描述</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.name" required name="user" class="form-control"/>
+	     		      	<input v-model="form.descText" required name="descText" class="form-control"/>
 	     		      </div>
 	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">职称</label>
+	     		    <div  class="form-group">
+	     		      <label  class="col-sm-2 control-label">过滤条件</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.title" required name="user" class="form-control"/>
+	     		      	<select v-model="form.filter">
+	     		      	  <option v-for="sourceQueue in form.sourceQueueList">{{sourceQueue}}</option>
+	     		      	</select>
 	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">科室</label>
-	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.department" required name="user" class="form-control"/>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">简介</label>
-	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
-	     		      </div>
-	     		    </validate>
-	     		    <validate  class="form-group">
-	     		      <label  class="col-sm-2 control-label">头像</label>
-	     		      <div class="col-sm-10">
-	     		      	上传
-	     		      </div>
-	     		    </validate>
+	     		    </div>
          		    <h4>策略配置</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="(sceneSupport, index) in sceneSupportList">
+	         		    <div  class="form-group" v-for="(sceneSupport, index) in form.sceneSupportList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="sceneSupportRadio"  :value="sceneSupport" >
+		         		    	<input class="pull-right" type="radio" :id="sceneSupport"  v-model="form.sceneSupportRadio"  :value="sceneSupport" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{sceneSupport}}</div>
 	         		    </div>
          		    </div>
          		    <h4>所属医生</h4>
          		    <div class="form-group">
-	         		    <div  class="form-group" v-for="worker in workerList">
+	         		    <div  class="form-group" v-for="worker in form.workerList">
 		         		    <div class="col-sm-2 ">
-		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="workerListCheckbox"  :value="worker.id" >
+		         		    	<input class="pull-right" type="checkbox" :id="worker.id" v-model="form.workerListCheckbox"  :value="worker.id" >
 		         		    </div>
 	         		        <div  class="col-sm-10 ">{{worker.name}}</div>
 
 	         		    </div>
          		    </div>
-	     		    <h4>账号信息</h4>
+<!-- 	     		    <h4>账号信息</h4>
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">账号</label>
 	     		    	<div class="col-sm-10">
@@ -76,9 +60,9 @@
 	     		    <div class="form-group">
 	     		    	<label  class="col-sm-2 control-label">密码</label>
 	     		    	<div class="col-sm-10">
-	     		    		<input v-model="form.password"   required name="user" class="form-control" />
+	     		    		<input v-model="form.password"   required name="password" class="form-control" />
 	     		    	</div>
-	     		    </div>
+	     		    </div> -->
 	     		  </vue-form>
 	     	</div>
 	     </div>
@@ -99,17 +83,20 @@
 				form: {
 					name: '',
 					scene: '',
-					descText: ''
+					descText: '',
+					workerList: '',
+					workerListCheckbox: [],
+					sceneSupportList: '',
+					sceneSupportRadio: '',
+					sourceQueueList: '',
+					filter: '',
+					password: '123456'
 				},
 				formBtnVal: ['连接失败', '连接测试', '连接成功'],
 				modal: {
 					modalShow: false,
 					modalContent: ''
-				},
-				workerList: '',
-				workerListCheckbox: [],
-				sceneSupportList: '',
-				sceneSupportRadio: ''
+				}
 			}
 		},
 		computed: {
@@ -132,17 +119,21 @@
 		},
 		created() {
 			this._init()
+			// this.form = this.queryParas
+			console.log('created ')
 			console.log(this.queryParas)
 		},
 		mounted() {
+			console.log('mounted')
 			console.log(this.$route)
 		},
 		methods: {
 			_init() {
 				this.getWorkerList()
 				this.getSceneSupportList()
+				this.getSourceQueueList()
 			},
-			addQueue() {
+			editQueue() {
 				if (this.formstate.$invalid) {
 					this.modal.modalShow = true;
 					this.modal.modalContent = '请填写完整数据';
@@ -171,7 +162,7 @@
 					action: 'getList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.workerList = res.workerList;
+					this.form.workerList = res.workerList;
 				}, (res) => {
 					console.log('failed')
 				})
@@ -182,8 +173,17 @@
 					action: 'getSceneSupportList',
 					stationID: this.stationID
 				}).then((res) => {
-					this.sceneSupportList = res.list;
-					console.log(this.sceneSupportList)
+					this.form.sceneSupportList = res.list;
+				}, (res) => {
+					console.log('failed')
+				})
+			},
+			getSourceQueueList() {
+				this.axios.post(this.queueInfoUrl, {
+					action: 'getSourceQueueList',
+					stationID: this.stationID
+				}).then((res) => {
+					this.form.sourceQueueList = res.list;
 				}, (res) => {
 					console.log('failed')
 				})

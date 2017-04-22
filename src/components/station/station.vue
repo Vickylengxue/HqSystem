@@ -26,14 +26,15 @@
 	               	   	        <tr>
 	               	   	        	<th>姓名</th>
 	               	   	        	<th>职务</th>
+	               	   	        	<th>操作</th>
 	               	   	        </tr>
 	               	   	   	    <tbody>
 	               	   	   	        <div class="noData" v-if="workerList.length == 0">没有医生</div>
 	               	   	   	        <tr v-for="worker in workerList">
 	               	   	   	        	<td>{{worker.name}}</td>
 	               	   	   	        	<td>{{worker.title}}</td>
+	               	   	   	        	<td @click="edit('/editWorker', worker)">编辑</td>
 	               	   	   	        </tr>	
-	               	   	   	    	
 	               	   	   	    </tbody>
 	               	   	   </table>
 	               	   </div>
@@ -41,15 +42,15 @@
 		               	   <table class="table">
 		               	        <tr>
 		               	        	<th>队列名字</th>
-		               	        	<th>stationID</th>
+		               	        	<th>队列id</th>
 		               	        	<th>操作</th>
 		               	        </tr>
 		               	   	    <tbody>
 		               	   	        <div class="noData" v-if="queueList.length == 0">没有队列</div>
 		               	   	        <tr v-for="queue in queueList">
 		               	   	        	<td>{{queue.name}}</td>
-		               	   	        	<td>{{queue.stationID}}</td>
-		               	   	        	<td @click="edit('/editQueue', queue)">编辑</td>
+		               	   	        	<td>{{queue.id}}</td>
+		               	   	        	<td @click="edit('/editQueue', queue)">{{queue}}编辑</td>
 		               	   	        </tr>	
 		               	   	    	
 		               	   	    </tbody>
@@ -168,8 +169,6 @@
 				})
 			},
 			edit(path, info) {
-                console.log('edit')
-                console.log(info)
                 this.$router.push({
                 	path: path,
                 	query: info

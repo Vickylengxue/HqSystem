@@ -13,31 +13,31 @@
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">账号</label>
 	     		      <div class="col-sm-10 clearfix">
-	     		      	<input v-model="form.id" required name="host" class="form-control" v-on:blur="verifyID"/>
+	     		      	<input v-model="form.id" required name="id" class="form-control" v-on:blur="verifyID"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">姓名</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.name" required name="user" class="form-control"/>
+	     		      	<input v-model="form.name" required name="name" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">职称</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.title" required name="user" class="form-control"/>
+	     		      	<input v-model="form.title" required name="title" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">科室</label>
 	     		      <div class="col-sm-10">
-	     		      	<input v-model="form.department" required name="user" class="form-control"/>
+	     		      	<input v-model="form.department" required name="department" class="form-control"/>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
 	     		      <label  class="col-sm-2 control-label">简介</label>
 	     		      <div class="col-sm-10">
-	     		      	<textarea v-model="form.descText" required name="user" class="form-control"></textarea>
+	     		      	<textarea v-model="form.descText" required name="descText" class="form-control"></textarea>
 	     		      </div>
 	     		    </validate>
 	     		    <validate  class="form-group">
@@ -154,7 +154,7 @@
 					})
 				}
 			},
-			//todo 上传做了一半
+			// todo 上传做了一半
 			// upload() {
    //              console.log('upload')
    //              let uploadImg = document.getElementById('uploadImg')
