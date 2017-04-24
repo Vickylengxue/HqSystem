@@ -23,13 +23,16 @@ Vue.use(VueRouter)
 if (window.localStorage.getItem('token')) {
     store.commit('login', window.localStorage.getItem('token'))
 }
-const routes = [{
+const routes = [
+   {
     path: '/login',
     component: login,
     meta: {
+        requireAuth: true,
         keepAlive: true
-    }
-}, {
+        }
+    },
+    {
     path: '/manage',
     meta: {
         requireAuth: true,
@@ -41,6 +44,7 @@ const routes = [{
             path: '/stationList',
             component: stationList,
             meta: {
+                requireAuth: true,
                 keepAlive: true
             }
         },
@@ -50,6 +54,7 @@ const routes = [{
             component: station,
             // 增加一个meta字段，表明不要缓存
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -58,6 +63,7 @@ const routes = [{
             path: '/addStation',
             component: addStation,
             meta: {
+                requireAuth: true,
                 keepAlive: true
             }
         },
@@ -66,6 +72,7 @@ const routes = [{
             path: '/addWorker',
             component: addWorker,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -74,6 +81,7 @@ const routes = [{
             path: '/batchAddWorker',
             component: batchAddWorker,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -82,6 +90,7 @@ const routes = [{
             path: '/editWorker',
             component: editWorker,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -90,6 +99,7 @@ const routes = [{
             path: '/addQueue',
             component: addQueue,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -98,6 +108,7 @@ const routes = [{
             path: '/editQueue',
             component: editQueue,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -106,6 +117,7 @@ const routes = [{
             path: '/addCaller',
             component: addCaller,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         },
@@ -114,6 +126,7 @@ const routes = [{
             path: '/editCaller',
             component: editCaller,
             meta: {
+                requireAuth: true,
                 keepAlive: false
             }
         }
@@ -126,23 +139,16 @@ const router = new VueRouter({
     // 设置 链接激活时使用的 CSS 类名。默认值可以通过路由的构造选项 linkActiveClass 来全局配置
     linkActiveClass: 'active'
 })
-// todo
-// 没看太懂
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!auth.loggedIn()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // 确保一定要调用 next()
-  }
+// 跳转前验证token
+router.beforeEach(({meta, path}, from, next) => {
+   if (!localStorage.token) {
+    store.commit('logout')
+   }
+   let { requireAuth = true } = meta
+   if (requireAuth && !store.state.token && path !== '/login') {
+      return next({path: '/login'})
+   }
+   next()
 })
 router.push('login')
 export default router;

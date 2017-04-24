@@ -14,13 +14,14 @@ axios.interceptors.request.use(
             // todo
             // 没看太明白
             // 统一添加token，怎么区别第一次登录？
-            console.log(store.state.token, 'token')
+            console.log('token success')
             if (store.state.token) {
                 config.data.token = `${store.state.token}`
             }
             return config;
     },
     err => {
+        console.log('token failed')
         return Promise.reject(err)
     }
 )
