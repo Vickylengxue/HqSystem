@@ -57,7 +57,7 @@
 				// todo
 				// 参数传递有点怪异
 				this.$router.push(
-					{ path: 'station',
+					{ name: 'station',
 					query: {
 						id: station.id,
 						name: encodeURIComponent(station.name)
@@ -65,7 +65,7 @@
 				})
 			},
 			goToState(state) {
-                this.$router.push('/' + state)
+				this.$router.push({name: state})
 			}
 		}
 	}

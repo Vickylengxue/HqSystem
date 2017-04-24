@@ -2,14 +2,14 @@
 	<div class="station">
                <div class="settings">
                   <div v-if="showInfoNumber == 0">
-   	               	<div class="btn btn-success" @click="add('/addWorker')">添加医生</div>
-   	               	<div class="btn btn-success" @click="add('/batchAddWorker')">批量添加医生</div>
+   	               	<div class="btn btn-success" @click="add('addWorker')">添加医生</div>
+   	               	<div class="btn btn-success" @click="add('batchAddWorker')">批量添加医生</div>
                   </div>
                  <div v-if="showInfoNumber == 1">
-  	               	<div class="btn btn-success" @click="add('/addQueue')">添加队列</div>
+  	               	<div class="btn btn-success" @click="add('addQueue')">添加队列</div>
                  </div>
                  <div v-if="showInfoNumber == 2">
-  	               	<div class="btn btn-success" @click="add('/addCaller')">添加叫号器</div>
+  	               	<div class="btn btn-success" @click="add('addCaller')">添加叫号器</div>
                  </div>
                </div>
                <middleLine height='20'></middleLine>
@@ -33,7 +33,7 @@
 	               	   	   	        <tr v-for="worker in workerList">
 	               	   	   	        	<td>{{worker.name}}</td>
 	               	   	   	        	<td>{{worker.title}}</td>
-	               	   	   	        	<td @click="edit('/editWorker', worker)">编辑</td>
+	               	   	   	        	<td @click="edit('editWorker', worker)">编辑</td>
 	               	   	   	        </tr>	
 	               	   	   	    </tbody>
 	               	   	   </table>
@@ -50,7 +50,7 @@
 		               	   	        <tr v-for="queue in queueList">
 		               	   	        	<td>{{queue.name}}</td>
 		               	   	        	<td>{{queue.id}}</td>
-		               	   	        	<td @click="edit('/editQueue', queue)">编辑</td>
+		               	   	        	<td @click="edit('editQueue', queue)">编辑</td>
 		               	   	        </tr>	
 		               	   	    	
 		               	   	    </tbody>
@@ -68,7 +68,7 @@
 		               	   	        <tr v-for="caller in callerList">
 		               	   	        	<td>{{caller.name}}</td>
 		               	   	        	<td>{{caller.pos}}</td>
-		               	   	        	<td @click="edit('/editCaller', caller)">编辑</td>
+		               	   	        	<td @click="edit('editCaller', caller)">编辑</td>
 		               	   	        </tr>	
 		               	   	    </tbody>
 		               	   </table>
@@ -160,17 +160,17 @@
 			showInfo(num) {
 				this.showInfoNumber = num;
 			},
-			add(state) {
+			add(stateName) {
 				this.$router.push({
-					path: state,
+					name: stateName,
 					query: {
 						stationID: this.stationID
 					}
 				})
 			},
-			edit(path, info) {
+			edit(stateName, info) {
                 this.$router.push({
-                	path: path,
+                	name: stateName,
                 	query: info
                 })
 			}

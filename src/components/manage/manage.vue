@@ -16,7 +16,7 @@
 		name: 'manage',
 		methods: {
 			goToState(state) {
-                this.$router.push('/' + state)
+                this.$router.push({name: state})
 			}
 		}
 	}

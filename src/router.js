@@ -39,9 +39,10 @@ const routes = [
         keepAlive: true
     },
     component: manage,
-    children: [{
+    children: [
+        {
             name: 'stationList',
-            path: '/stationList',
+            path: 'stationList',
             component: stationList,
             meta: {
                 requireAuth: true,
@@ -50,7 +51,7 @@ const routes = [
         },
         {
             name: 'station',
-            path: '/station',
+            path: 'station',
             component: station,
             // 增加一个meta字段，表明不要缓存
             meta: {
@@ -60,7 +61,7 @@ const routes = [
         },
         {
             name: 'addStation',
-            path: '/addStation',
+            path: 'addStation',
             component: addStation,
             meta: {
                 requireAuth: true,
@@ -69,7 +70,7 @@ const routes = [
         },
         {
             name: 'addWorker',
-            path: '/addWorker',
+            path: 'addWorker',
             component: addWorker,
             meta: {
                 requireAuth: true,
@@ -78,7 +79,7 @@ const routes = [
         },
         {
             name: 'batchAddWorker',
-            path: '/batchAddWorker',
+            path: 'batchAddWorker',
             component: batchAddWorker,
             meta: {
                 requireAuth: true,
@@ -87,7 +88,7 @@ const routes = [
         },
         {
             name: 'editWorker',
-            path: '/editWorker',
+            path: 'editWorker',
             component: editWorker,
             meta: {
                 requireAuth: true,
@@ -96,7 +97,7 @@ const routes = [
         },
         {
             name: 'addQueue',
-            path: '/addQueue',
+            path: 'addQueue',
             component: addQueue,
             meta: {
                 requireAuth: true,
@@ -105,7 +106,7 @@ const routes = [
         },
         {
             name: 'editQueue',
-            path: '/editQueue',
+            path: 'editQueue',
             component: editQueue,
             meta: {
                 requireAuth: true,
@@ -114,7 +115,7 @@ const routes = [
         },
         {
             name: 'addCaller',
-            path: '/addCaller',
+            path: 'addCaller',
             component: addCaller,
             meta: {
                 requireAuth: true,
@@ -123,7 +124,7 @@ const routes = [
         },
         {
             name: 'editCaller',
-            path: '/editCaller',
+            path: 'editCaller',
             component: editCaller,
             meta: {
                 requireAuth: true,
@@ -131,7 +132,12 @@ const routes = [
             }
         }
     ]
-}]
+    },
+    {
+    path: '*', // 其他页面，强制跳转到登录页面
+    redirect: '/login'
+    }
+]
 
 // 路由
 const router = new VueRouter({
@@ -150,7 +156,7 @@ router.beforeEach(({meta, path}, from, next) => {
    }
    next()
 })
-router.push('login')
+// router.push('login')
 export default router;
 
 
