@@ -48,7 +48,6 @@
 	        	         		        <div  class="col-sm-3 ">{{worker.name}}</div>
 			         		        </div>
 			         		    </div>
-			         		    {{form.workerLimit}}
 		         		    </div>
 	         		    </div>
 	         		    <h4>优先队列</h4>
@@ -89,6 +88,7 @@
 					scene: '',
 					descText: '',
 					ip: '',
+					id: '',
 					workerList: '',
 					pos: '',
 					workerListCheckbox: [],
@@ -138,6 +138,7 @@
 				this.getQueueList()
 			},
 			setParas() {
+				this.form.id = this.queryParas.id
 				this.form.name = this.queryParas.name
 				this.form.type = this.queryParas.type
 				this.form.ip = this.queryParas.ip
@@ -152,14 +153,16 @@
 					this.modal.modalContent = '请填写完整数据';
 				} else {
 					this.form.user = this.form.name;
-					this.axios.post(this.queueInfoUrl, {
-						action: 'add',
+					this.axios.post(this.callerUrl, {
+						action: 'edit',
 						stationID: this.stationID,
 						name: this.form.name,
-						scene: this.sceneSupportRadio,
-						descText: this.form.descText,
-						// filter:
-						workerLimit: this.workerListCheckbox
+						type: this.form.type,
+						ip: this.form.ip,
+						id: this.form.id,
+						pos: this.form.pos,
+						workerLimit: this.form.workerLimit,
+						priorQueue: this.form.priorQueue
 					}).then((res) => {
                        console.log(res)
                        this.modal.modalShow = true;
