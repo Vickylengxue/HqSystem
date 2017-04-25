@@ -1,6 +1,6 @@
 <template lang="html">
 	<div class="login">
-	    <div class="login-header">
+	    <div class="login-header":style="{'backgroundImage':'url('+loginBG+')'}">
 	      <div class="title">
 	      	<p class="en-title">H<span>Q</span>MS</p>
 	      	<p class="zh-title">排队叫号管理系统</p>
@@ -8,10 +8,12 @@
 	    </div>
 	    <vue-form :state="formstate" @submit.prevent="saveForm" class="saveForm">
 	        <validate  class="form-group">
-	          <input v-model="form.userName" required name="userName" placeholder="用户名" class="form-control"  :class="[fieldClassName(formstate.userName)]"/>
+	          <input v-model="form.userName" required name="userName" placeholder="用户名 " class="form-control"  :class="[fieldClassName(formstate.userName)]"/>
+	          <i class="iconfont icon-user"></i>
 	        </validate>
 	        <validate  class="form-group">
 	          <input v-model="form.passwd" class="form-control" name="passwd" placeholder="密码" type="password" required :class="[fieldClassName(formstate.passwd)]" />
+	          <i class="iconfont icon-iconlock"></i>
 	        </validate>
 	        <button type="submit" class="btn btn-primary btn-block">登录</button>
 	      </vue-form>
@@ -21,6 +23,7 @@
     import Vue from 'vue'
 	import VueForm from 'vue-form'
 	import utils from 'common/utils/utils.js'
+	import loginBG from 'img/login-bg.png'
 	Vue.use(VueForm)
 	export default {
 		name: 'login',
@@ -33,7 +36,8 @@
 				},
 				formClass: {
 					formControl: true
-				}
+				},
+				loginBG: loginBG
 			}
 		},
 		computed: {
@@ -75,7 +79,8 @@
 
 <style lang="stylus" scoped>
 
-.form-group 
+.form-group
+	position: relative
 	font-size: 40px
 	margin-bottom: 1.6em
 	.form-control 
@@ -89,7 +94,7 @@
 	height: 280px
 	background: #0097FB
 	width:100%
-
+	
 .title 
 	width:500px
 	margin:0 auto
@@ -128,5 +133,13 @@ button
 .saveForm 
 	width: 25.89%
 	margin: 1.75em auto
-
+	
+.iconfont
+	position: absolute
+	top: 16px
+	right: 28px
+	color: #777
+	font-size: 36px
+	
+	
 </style>
