@@ -9,7 +9,7 @@
 	    <vue-form :state="formstate" @submit.prevent="saveForm" class="saveForm">
 	        <validate  class="form-group">
 	          <span>用户名</span>
-	          <input v-model="form.userName" required name="userName" class="form-control"  :class="[fieldClassName(formstate.userName)]"/>
+	          <input v-model="form.user" required name="user" class="form-control"  :class="[fieldClassName(formstate.user)]"/>
 	        </validate>
 	        <validate  class="form-group">
 	          <span>密码</span>
@@ -30,7 +30,7 @@
 			return {
 				formstate: {},
 				form: {
-					userName: '',
+					user: '',
 					passwd: ''
 				},
 				formClass: {
@@ -56,14 +56,17 @@
 				console.log(this.serverUrl)
 				this.axios.post(this.serverUrl, {
 					action: 'GetToken',
-					userName: this.form.userName,
+					user: this.form.user,
 					passwd: this.form.passwd
 				}).then((res) => {
+					console.log('res', res)
 						this.$store.commit('login', res.token);
 						// 路由跳转
 						// todo
 						// this.$route 和 this.$router不一样
-						this.$router.push('/manage')
+						this.$router.push({
+							name: 'workStation'
+						})
 				}, (res) => {
 					console.log('failed')
 				})

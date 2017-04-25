@@ -13,4 +13,9 @@ bg-image($url)
   background-image: url('img/'+$url+'@2x.png')
   @media(-webkit-min-device-pixel-ratio:3),(min-device-pixel-ratio:3){
     background-image: url('img/'+$url+'@3x.png')
-  }
+}
+
+box-shdow()
+  -moz-box-shadow: arguments
+  -webkit-box-shadow: arguments
+  box-shadow:         arguments
