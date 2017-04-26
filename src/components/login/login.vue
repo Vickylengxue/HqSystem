@@ -59,14 +59,29 @@
 					user: this.form.user,
 					passwd: this.form.passwd
 				}).then((res) => {
-					console.log('res', res)
+					console.log(res)
+					console.log(res.stationID)
+					if (res.hasOwnProperty('token')) {
 						this.$store.commit('login', res.token);
 						// 路由跳转
 						// todo
 						// this.$route 和 this.$router不一样
-						this.$router.push({
-							name: 'workStation'
-						})
+						let userType = res.userType
+						if (userType === 'Manager') {
+							this.$router.push({
+								name: 'manage'
+							})
+						} else if (userType === 'station') {
+                            this.$router.push({
+                            	name: 'workStation',
+                            	query: {
+                            		stationID: res.stationID
+                            	}
+                            })
+						}
+					} else {
+						alert('账号密码错误，请重新登录')
+					}
 				}, (res) => {
 					console.log('failed')
 				})

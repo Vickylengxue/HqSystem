@@ -30,9 +30,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         let data = response.data
-        if (data.rescode === '200') {
-          return data.detail
-        }
+        return data.detail
     },
     error => {
         if (error.response) {
