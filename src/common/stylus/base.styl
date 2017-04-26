@@ -1,14 +1,39 @@
 body,html
   font-weight: 200
   
+li
+  list-style-type :none
+label,ul
+  margin: 0
+  
 .clearfix
-  display: inline-block;
-  &:after
-    display: block;
-    content: ''
-    height: 0
-    line-height: 0
-    clear: both;
-    visibility: hidden;
+  display: inline-block
+//   &:after
+//     display: block
+//     content: ''
+//     height: 0
+//     line-height: 0
+//     clear: both
+//     visibility: hidden
+    
 .has-danger
    border: 1px solid red
+   
+// 超小屏幕
+@media (max-width: 767px) {
+  
+}
+// 小屏幕
+@media (min-width: 768px) {
+
+}
+
+// 中屏幕
+@media (min-width: 992px) {
+
+}
+
+// 大屏幕
+@media (min-width: 1200px) {
+
+}
